@@ -20,7 +20,10 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
+        let singInController = SignInCoordinator(navigationController: navigationController)
+        window?.rootViewController = navigationController
         
+        start(coordinator: singInController)
     }
     
     func start(coordinator: Coordinator) {
