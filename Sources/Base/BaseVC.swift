@@ -28,6 +28,7 @@ class BaseVC<T: BaseViewModel>: UIViewController{
     @available(*, unavailable)
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        viewModel.coordinator.didFinish(coordinator: viewModel.coordinator)
     }
     
     deinit{

@@ -1,12 +1,9 @@
-//
-//  BaseVM.swift
-//  FindMe
-//
-//  Created by 민도현 on 2022/11/04.
-//  Copyright © 2022 com.dohyeon. All rights reserved.
-//
+import UIKit
 
-import Foundation
-
-class BaseViewModel { 
+class BaseViewModel {
+    let coordinator: baseCoordinator
+    
+    init(coordinator: baseCoordinator){
+        self.coordinator = coordinator
+    }
 }
