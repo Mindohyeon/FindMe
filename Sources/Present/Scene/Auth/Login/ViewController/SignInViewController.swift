@@ -10,7 +10,7 @@ import UIKit
 class SignInViewController: BaseVC<SignInViewModel> {
     private let logoImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.image = FindMeAsset.Images.projectLogoImage.image
+        $0.image = FindMeAsset.Images.logoImg.image
     }
     
     private let inputIdTextField = UnderLineTextField().then {

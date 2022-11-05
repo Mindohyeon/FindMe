@@ -16,6 +16,6 @@ class BaseButton: UIButton {
     func setupView() {
         layer.cornerRadius = 10
         clipsToBounds = true
-        backgroundColor = .blue
+        backgroundColor = FindMeAsset.Colors.findmeMainColor.color
     }
 }
