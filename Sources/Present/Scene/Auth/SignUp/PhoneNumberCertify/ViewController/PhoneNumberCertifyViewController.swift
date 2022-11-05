@@ -14,15 +14,27 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
         $0.image = UIImage(systemName: "phone.fill")
     }
     
+    private let descriptionPageLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 16)
+        $0.text = "회원가입을 위해서 본인인증이 필요합니다."
+    }
+    
     override func addView() {
-        view.addSubViews(phoneImageView)
+        view.addSubViews(phoneImageView, descriptionPageLabel)
     }
     
     override func setLayout() {
         phoneImageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(112)
-            $0.leading.trailing.equalToSuperview().inset(148)
+            $0.centerX.equalToSuperview()
             $0.size.equalTo(64)
+        }
+        
+        descriptionPageLabel.snp.makeConstraints {
+            $0.top.equalTo(phoneImageView.snp.bottom).offset(24)
+            $0.leading.trailing.equalToSuperview().offset(66)
+            
         }
     }
 }
+
