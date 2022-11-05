@@ -21,8 +21,12 @@ class SignInViewController: BaseVC<SignInViewModel> {
         $0.setPlaceholder(placeholder: "비밀번호를 입력해주세요.")
     }
     
+    private let signInButton = CustomButton().then {
+        $0.setUpTitle(title: "로그인")
+    }
+    
     override func addView() {
-        view.addSubViews(logoImageView, inputIdTextField, inputPasswordTextField)
+        view.addSubViews(logoImageView, inputIdTextField, inputPasswordTextField, signInButton)
     }
     
     override func setLayout() {
@@ -41,6 +45,12 @@ class SignInViewController: BaseVC<SignInViewModel> {
         inputPasswordTextField.snp.makeConstraints {
             $0.top.equalTo(inputIdTextField.snp.bottom).offset(50)
             $0.leading.trailing.equalToSuperview().inset(30)
+        }
+        
+        signInButton.snp.makeConstraints {
+            $0.top.equalTo(inputPasswordTextField.snp.bottom).offset(42)
+            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(48)
         }
     }
 }
