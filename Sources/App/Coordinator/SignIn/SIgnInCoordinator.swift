@@ -16,4 +16,23 @@ class SignInCoordinator: baseCoordinator {
         
         navigationController.setViewControllers([vc], animated: true)
     }
+    
+    override func navigate(to step: FMStep) {
+        switch step {
+        case .phoneNumberCertityIsRequired:
+            phoneNumberCerticyIsRequired()
+
+        default:
+            return
+        }
+    }
+}
+
+private extension SignInCoordinator {
+    private func phoneNumberCerticyIsRequired() {
+        let vm = PhoneNumberCerticyViewModel(coordinator: self)
+        let vc = PhoneNumberCertifyController(viewModel: vm)
+        
+        navigationController.pushViewController(vc, animated: true)
+    }
 }

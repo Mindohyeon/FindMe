@@ -9,5 +9,7 @@
 import Foundation
 
 class SignInViewModel: BaseViewModel {
-    
+    func pushPhoneNumberCertifyVC() {
+        coordinator.navigate(to: .phoneNumberCertityIsRequired)
+    }
 }

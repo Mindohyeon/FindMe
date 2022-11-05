@@ -32,7 +32,7 @@ class SignInViewController: BaseVC<SignInViewModel> {
     }
     
     @objc func signUpButtondidTap(_ sender: UITapGestureRecognizer) {
-        print("hi")
+        viewModel.pushPhoneNumberCertifyVC()
     }
     
     override func configureVC() {
