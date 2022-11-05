@@ -25,15 +25,33 @@ class SignInViewController: BaseVC<SignInViewModel> {
         $0.setUpTitle(title: "로그인")
     }
     
+    private let signUpLabel = UILabel().then {
+        $0.isUserInteractionEnabled = true
+        $0.font = .systemFont(ofSize: 13)
+        $0.text = "아이디가 없으신가요? 회원가입 하러가기"
+    }
+    
+    @objc func signUpButtondidTap(_ sender: UITapGestureRecognizer) {
+        print("hi")
+    }
+    
+    override func configureVC() {
+        let attributedStr = NSMutableAttributedString(string: signUpLabel.text!)
+        attributedStr.addAttribute(.foregroundColor, value: UIColor.blue, range: (signUpLabel.text! as NSString).range(of: "회원가입"))
+        signUpLabel.attributedText = attributedStr
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(signUpButtondidTap(_:)))
+        signUpLabel.addGestureRecognizer(tap)
+    }
+    
     override func addView() {
-        view.addSubViews(logoImageView, inputIdTextField, inputPasswordTextField, signInButton)
+        view.addSubViews(logoImageView, inputIdTextField, inputPasswordTextField, signInButton, signUpLabel)
     }
     
     override func setLayout() {
         logoImageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(135)
             $0.leading.trailing.equalToSuperview().inset(95)
-            $0.width.equalTo(148)
             $0.height.equalTo(49)
         }
         
@@ -51,6 +69,11 @@ class SignInViewController: BaseVC<SignInViewModel> {
             $0.top.equalTo(inputPasswordTextField.snp.bottom).offset(42)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(48)
+        }
+        
+        signUpLabel.snp.makeConstraints {
+            $0.top.equalTo(signInButton.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().inset(76)
         }
     }
 }
