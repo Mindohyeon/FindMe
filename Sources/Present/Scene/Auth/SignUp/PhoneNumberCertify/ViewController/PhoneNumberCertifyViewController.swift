@@ -30,8 +30,17 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
         $0.setTitle("인증번호 발송", for: .normal)
     }
     
+    private lazy var certificationButton = CustomButton().then {
+        $0.addTarget(self, action: #selector(certificationBtnDidTap(_:)), for: .touchUpInside)
+        $0.setUpTitle(title: "인증")
+    }
+    
+    @objc func certificationBtnDidTap(_ sender: UIButton) {
+        viewModel.pushInputUserIdVC()
+    }
+    
     override func addView() {
-        view.addSubViews(phoneImageView, descriptionPageLabel, inputPhoneNumberTextField, sendCertificationNumberButton)
+        view.addSubViews(phoneImageView, descriptionPageLabel, inputPhoneNumberTextField, sendCertificationNumberButton, certificationButton)
     }
     
     override func setLayout() {
@@ -54,6 +63,12 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
         sendCertificationNumberButton.snp.makeConstraints {
             $0.top.equalTo(inputPhoneNumberTextField.snp.top).offset(-3)
             $0.trailing.equalTo(inputPhoneNumberTextField.snp.trailing)
+        }
+        
+        certificationButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(64)
+            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(48)
         }
     }
 }

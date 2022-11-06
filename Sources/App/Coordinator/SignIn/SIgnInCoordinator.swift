@@ -30,9 +30,9 @@ class SignInCoordinator: baseCoordinator {
 
 private extension SignInCoordinator {
     private func phoneNumberCerticyIsRequired() {
-        let vm = PhoneNumberCerticyViewModel(coordinator: self)
-        let vc = PhoneNumberCertifyController(viewModel: vm)
-        
-        navigationController.pushViewController(vc, animated: true)
+        let vc = PhoneNumberCertifyCoordinator(navigationController: navigationController)
+        vc.parentCoordinator = self
+        childCoordinators.append(vc)
+        vc.start()
     }
 }
