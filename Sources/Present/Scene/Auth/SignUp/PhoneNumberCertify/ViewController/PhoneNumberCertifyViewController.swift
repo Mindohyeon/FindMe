@@ -23,7 +23,7 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
         $0.setPlaceholder(placeholder: "전화번호를 입력해주세요.")
     }
     
-    private let sendCertificationNumberLabel = UIButton().then {
+    private let sendCertificationNumberButton = UIButton().then {
         $0.titleLabel?.font = .systemFont(ofSize: 14)
         $0.setTitleColor(FindMeAsset.Colors.findmeMainColor.color, for: .normal)
         $0.backgroundColor = .clear
@@ -31,7 +31,7 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
     }
     
     override func addView() {
-        view.addSubViews(phoneImageView, descriptionPageLabel, inputPhoneNumberTextField, sendCertificationNumberLabel)
+        view.addSubViews(phoneImageView, descriptionPageLabel, inputPhoneNumberTextField, sendCertificationNumberButton)
     }
     
     override func setLayout() {
@@ -51,7 +51,7 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         
-        sendCertificationNumberLabel.snp.makeConstraints {
+        sendCertificationNumberButton.snp.makeConstraints {
             $0.top.equalTo(inputPhoneNumberTextField.snp.top).offset(-3)
             $0.trailing.equalTo(inputPhoneNumberTextField.snp.trailing)
         }
