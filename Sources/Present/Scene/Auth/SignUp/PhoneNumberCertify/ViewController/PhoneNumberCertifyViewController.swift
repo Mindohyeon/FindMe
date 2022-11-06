@@ -15,8 +15,9 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
     }
     
     private let descriptionPageLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 16)
         $0.text = "회원가입을 위해서 본인인증이 필요합니다."
+        $0.textColor = .gray
+        $0.font = .systemFont(ofSize: 16)
     }
     
     private let inputPhoneNumberTextField = UnderLineTextField().then {
@@ -24,15 +25,15 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
     }
     
     private let sendCertificationNumberButton = UIButton().then {
+        $0.setTitle("인증번호 발송", for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
         $0.setTitleColor(FindMeAsset.Colors.findmeMainColor.color, for: .normal)
         $0.backgroundColor = .clear
-        $0.setTitle("인증번호 발송", for: .normal)
     }
     
     private lazy var certificationButton = CustomButton().then {
-        $0.addTarget(self, action: #selector(certificationBtnDidTap(_:)), for: .touchUpInside)
         $0.setUpTitle(title: "인증")
+        $0.addTarget(self, action: #selector(certificationBtnDidTap(_:)), for: .touchUpInside)
     }
     
     @objc func certificationBtnDidTap(_ sender: UIButton) {

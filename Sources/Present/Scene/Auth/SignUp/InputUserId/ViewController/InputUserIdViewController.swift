@@ -10,8 +10,10 @@ import UIKit
 
 class InputUserIdViewController: BaseVC<InputUserIdViewModel> {
     private let descriptionPageLabel = UILabel().then {
+        $0.text = "사용하실 아이디와 비밀번호를 입력해주세요."
+        $0.textColor = .gray
+        $0.textAlignment = .center
         $0.font = .systemFont(ofSize: 16)
-        $0.text = "분실물 배송 및 보안을 위해\n 이름(실명)을 입력해주세요."
     }
     
     override func addView() {
@@ -21,7 +23,7 @@ class InputUserIdViewController: BaseVC<InputUserIdViewModel> {
     override func setLayout() {
         descriptionPageLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(190)
-            $0.leading.trailing.equalToSuperview().inset(71)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
     }
 }

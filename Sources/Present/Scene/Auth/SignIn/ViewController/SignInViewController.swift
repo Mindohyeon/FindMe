@@ -9,8 +9,8 @@ import UIKit
 
 class SignInViewController: BaseVC<SignInViewModel> {
     private let logoImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
         $0.image = FindMeAsset.Images.logoImg.image
+        $0.contentMode = .scaleAspectFit
     }
     
     private let inputIdTextField = UnderLineTextField().then {
@@ -26,9 +26,9 @@ class SignInViewController: BaseVC<SignInViewModel> {
     }
     
     private let signUpLabel = UILabel().then {
-        $0.isUserInteractionEnabled = true
-        $0.font = .systemFont(ofSize: 13)
         $0.text = "아이디가 없으신가요? 회원가입 하러가기"
+        $0.font = .systemFont(ofSize: 13)
+        $0.isUserInteractionEnabled = true
     }
     
     @objc func signUpButtondidTap(_ sender: UITapGestureRecognizer) {
