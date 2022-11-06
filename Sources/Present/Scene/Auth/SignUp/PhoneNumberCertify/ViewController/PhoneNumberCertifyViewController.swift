@@ -19,8 +19,19 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
         $0.text = "회원가입을 위해서 본인인증이 필요합니다."
     }
     
+    private let inputPhoneNumberTextField = UnderLineTextField().then {
+        $0.setPlaceholder(placeholder: "전화번호를 입력해주세요.")
+    }
+    
+    private let sendCertificationNumberLabel = UIButton().then {
+        $0.titleLabel?.font = .systemFont(ofSize: 14)
+        $0.setTitleColor(FindMeAsset.Colors.findmeMainColor.color, for: .normal)
+        $0.backgroundColor = .clear
+        $0.setTitle("인증번호 발송", for: .normal)
+    }
+    
     override func addView() {
-        view.addSubViews(phoneImageView, descriptionPageLabel)
+        view.addSubViews(phoneImageView, descriptionPageLabel, inputPhoneNumberTextField, sendCertificationNumberLabel)
     }
     
     override func setLayout() {
@@ -33,7 +44,16 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
         descriptionPageLabel.snp.makeConstraints {
             $0.top.equalTo(phoneImageView.snp.bottom).offset(24)
             $0.leading.trailing.equalToSuperview().offset(66)
-            
+        }
+        
+        inputPhoneNumberTextField.snp.makeConstraints {
+            $0.top.equalTo(descriptionPageLabel.snp.bottom).offset(67)
+            $0.leading.trailing.equalToSuperview().inset(30)
+        }
+        
+        sendCertificationNumberLabel.snp.makeConstraints {
+            $0.top.equalTo(inputPhoneNumberTextField.snp.top).offset(-3)
+            $0.trailing.equalTo(inputPhoneNumberTextField.snp.trailing)
         }
     }
 }
