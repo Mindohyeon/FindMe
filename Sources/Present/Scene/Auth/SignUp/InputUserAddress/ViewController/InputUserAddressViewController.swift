@@ -12,7 +12,7 @@ class InputUserAddressViewController: BaseVC<BaseViewModel> {
     private let descriptionPageLabel = UILabel().then {
         $0.text = "분실물 배송을 위해 주소를 입력해주세요."
         $0.font = .systemFont(ofSize: 16)
-        $0.contentMode = .center
+        $0.textAlignment = .center
     }
     
     private let inputUserAddressTextField = UnderLineTextField().then {
@@ -26,8 +26,12 @@ class InputUserAddressViewController: BaseVC<BaseViewModel> {
         $0.backgroundColor = .clear
     }
     
+    private let completeButton = CustomButton().then {
+        $0.setUpTitle(title: "완료")
+    }
+    
     override func addView() {
-        view.addSubViews(descriptionPageLabel, inputUserAddressTextField, addressSearchButton)
+        view.addSubViews(descriptionPageLabel, inputUserAddressTextField, addressSearchButton, completeButton)
     }
     
     override func setLayout() {
@@ -44,6 +48,12 @@ class InputUserAddressViewController: BaseVC<BaseViewModel> {
         addressSearchButton.snp.makeConstraints {
             $0.top.equalTo(inputUserAddressTextField).offset(-3)
             $0.trailing.equalTo(inputUserAddressTextField.snp.trailing)
+        }
+        
+        completeButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(64)
+            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(48)
         }
     }
 }
