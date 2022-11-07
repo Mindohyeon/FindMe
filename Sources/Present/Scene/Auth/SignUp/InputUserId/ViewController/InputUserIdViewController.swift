@@ -16,14 +16,51 @@ class InputUserIdViewController: BaseVC<InputUserIdViewModel> {
         $0.font = .systemFont(ofSize: 16)
     }
     
+    private let inputIdTextField = UnderLineTextField().then {
+        $0.setPlaceholder(placeholder: "아이디를 입력해주세요.")
+    }
+    
+    private let inputPasswordTextField = UnderLineTextField().then {
+        $0.setPlaceholder(placeholder: "비밀번호를 입력해주세요.")
+    }
+    
+    private let inputCheckPasswordTextField = UnderLineTextField().then {
+        $0.setPlaceholder(placeholder: "비밀번호를 다시 입력해주세요.")
+    }
+    
+    private let nextButton = CustomButton().then {
+        $0.setUpTitle(title: "다음")
+    }
+    
     override func addView() {
-        view.addSubViews(descriptionPageLabel)
+        view.addSubViews(descriptionPageLabel, inputIdTextField, inputPasswordTextField, inputCheckPasswordTextField, nextButton)
     }
     
     override func setLayout() {
         descriptionPageLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(190)
             $0.leading.trailing.equalToSuperview().inset(40)
+        }
+        
+        inputIdTextField.snp.makeConstraints {
+            $0.top.equalTo(descriptionPageLabel.snp.bottom).offset(97)
+            $0.leading.trailing.equalToSuperview().inset(30)
+        }
+        
+        inputPasswordTextField.snp.makeConstraints {
+            $0.top.equalTo(inputIdTextField.snp.bottom).offset(52)
+            $0.leading.trailing.equalToSuperview().inset(30)
+        }
+        
+        inputCheckPasswordTextField.snp.makeConstraints {
+            $0.top.equalTo(inputPasswordTextField.snp.bottom).offset(35)
+            $0.leading.trailing.equalToSuperview().inset(30)
+        }
+        
+        nextButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(64)
+            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(48)
         }
     }
 }

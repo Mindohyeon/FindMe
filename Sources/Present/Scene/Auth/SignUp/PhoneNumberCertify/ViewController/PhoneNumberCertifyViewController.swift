@@ -36,7 +36,7 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
         $0.addTarget(self, action: #selector(certificationBtnDidTap(_:)), for: .touchUpInside)
     }
     
-    @objc func certificationBtnDidTap(_ sender: UIButton) {
+    @objc private func certificationBtnDidTap(_ sender: UIButton) {
         viewModel.pushInputUserIdVC()
     }
     
