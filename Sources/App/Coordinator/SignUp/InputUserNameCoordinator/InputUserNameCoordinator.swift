@@ -15,4 +15,23 @@ class InputUserNameCoordinator: baseCoordinator {
         
         navigationController.pushViewController(vc, animated: true)
     }
+    
+    override func navigate(to step: FMStep) {
+        switch step {
+        case .inputUserAddressIsRequired:
+            inputUserAddressIsRequired()
+            
+        default:
+            return
+        }
+    }
+}
+
+private extension InputUserNameCoordinator {
+    private func inputUserAddressIsRequired() {
+        let vc = InputUserAddressCoordinator(navigationController: navigationController)
+        vc.parentCoordinator = self
+        childCoordinators.append(vc)
+        vc.start()
+    }
 }

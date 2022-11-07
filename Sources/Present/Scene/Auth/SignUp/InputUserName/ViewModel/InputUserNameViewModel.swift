@@ -9,5 +9,7 @@
 import Foundation
 
 class InputUserNameViewModel: BaseViewModel {
-    
+    func pushInputUserAddressVC() {
+        coordinator.navigate(to: .inputUserAddressIsRequired)
+    }
 }

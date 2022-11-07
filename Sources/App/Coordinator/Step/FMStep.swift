@@ -3,4 +3,5 @@ enum FMStep {
     case phoneNumberCertityIsRequired
     case inputUserIdIsRequired
     case inputUserNameIsRequired
+    case inputUserAddressIsRequired
 }

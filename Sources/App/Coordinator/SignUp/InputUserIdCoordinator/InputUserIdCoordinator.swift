@@ -31,7 +31,6 @@ private extension InputUserIdCoordinator {
         let vc = InputUserNameCoordinator(navigationController: navigationController)
         vc.parentCoordinator = self
         childCoordinators.append(vc)
-        
         vc.start()
     }
 }

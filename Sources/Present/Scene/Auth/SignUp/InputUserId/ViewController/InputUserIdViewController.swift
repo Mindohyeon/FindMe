@@ -29,8 +29,8 @@ class InputUserIdViewController: BaseVC<InputUserIdViewModel> {
     }
     
     private lazy var nextButton = CustomButton().then {
-        $0.addTarget(self, action: #selector(nextButtonDidTap(_:)), for: .touchUpInside)
         $0.setUpTitle(title: "다음")
+        $0.addTarget(self, action: #selector(nextButtonDidTap(_:)), for: .touchUpInside)
     }
     
     @objc private func nextButtonDidTap(_ sender: UIButton) {
