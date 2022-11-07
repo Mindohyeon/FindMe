@@ -16,7 +16,6 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
     
     private let descriptionPageLabel = UILabel().then {
         $0.text = "회원가입을 위해서 본인인증이 필요합니다."
-        $0.textColor = .gray
         $0.font = .systemFont(ofSize: 16)
     }
     

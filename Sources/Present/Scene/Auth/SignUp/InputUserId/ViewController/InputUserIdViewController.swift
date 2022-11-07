@@ -11,7 +11,6 @@ import UIKit
 class InputUserIdViewController: BaseVC<InputUserIdViewModel> {
     private let descriptionPageLabel = UILabel().then {
         $0.text = "사용하실 아이디와 비밀번호를 입력해주세요."
-        $0.textColor = .gray
         $0.textAlignment = .center
         $0.font = .systemFont(ofSize: 16)
     }
