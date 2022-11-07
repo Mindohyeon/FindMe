@@ -28,8 +28,13 @@ class InputUserIdViewController: BaseVC<InputUserIdViewModel> {
         $0.setPlaceholder(placeholder: "비밀번호를 다시 입력해주세요.")
     }
     
-    private let nextButton = CustomButton().then {
+    private lazy var nextButton = CustomButton().then {
+        $0.addTarget(self, action: #selector(nextButtonDidTap(_:)), for: .touchUpInside)
         $0.setUpTitle(title: "다음")
+    }
+    
+    @objc private func nextButtonDidTap(_ sender: UIButton) {
+        viewModel.pushInputUserNameVC()
     }
     
     override func addView() {

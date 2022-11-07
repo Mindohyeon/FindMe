@@ -2,4 +2,5 @@ enum FMStep {
     //SignUp
     case phoneNumberCertityIsRequired
     case inputUserIdIsRequired
+    case inputUserNameIsRequired
 }
