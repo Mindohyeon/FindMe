@@ -8,10 +8,12 @@
 
 import Foundation
 
-struct SignUpModel {
-    var id: String
-    var password: String
-    var phoneNumber: String
-    var userName: String
-    var address: String
+class SignUpModel: Codable {
+    static let signUpModel = SignUpModel()
+    
+    var id: String?
+    var password: String?
+    var phoneNumber: String?
+    var userName: String?
+    var address: String?
 }
