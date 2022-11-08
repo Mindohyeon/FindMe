@@ -25,7 +25,14 @@ class InputUserNameViewController: BaseVC<InputUserNameViewModel> {
         $0.addTarget(self, action: #selector(nextButtonDidTap(_:)), for: .touchUpInside)
     }
     
+    private func insertUserNameData() {
+        guard let userName = inputUserNameTextField.text else { return }
+        let userInfo = SignUpModel.share
+        userInfo.userName = userName
+    }
+    
     @objc private func nextButtonDidTap(_ sender: UIButton) {
+        insertUserNameData()
         viewModel.pushInputUserAddressVC()
     }
     

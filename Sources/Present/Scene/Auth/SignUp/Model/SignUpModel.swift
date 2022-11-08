@@ -9,11 +9,13 @@
 import Foundation
 
 class SignUpModel: Codable {
-    static let signUpModel = SignUpModel()
+    static let share = SignUpModel()
     
     var id: String?
     var password: String?
     var phoneNumber: String?
     var userName: String?
     var address: String?
+    
+    private init() {}
 }

@@ -32,7 +32,16 @@ class InputUserIdViewController: BaseVC<InputUserIdViewModel> {
         $0.addTarget(self, action: #selector(nextButtonDidTap(_:)), for: .touchUpInside)
     }
     
+    private func insertUserIdData() {
+        guard let id = inputIdTextField.text else { return }
+        guard let password = inputPasswordTextField.text else { return }
+        let userInfo = SignUpModel.share
+        userInfo.id = id
+        userInfo.password = password
+    }
+    
     @objc private func nextButtonDidTap(_ sender: UIButton) {
+        insertUserIdData()
         viewModel.pushInputUserNameVC()
     }
     

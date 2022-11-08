@@ -35,7 +35,14 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
         $0.addTarget(self, action: #selector(certificationBtnDidTap(_:)), for: .touchUpInside)
     }
     
+    private func inputUserPhoneNumberData() {
+        guard let phoneNumberText = inputPhoneNumberTextField.text else { return }
+        let userInfo = SignUpModel.share
+        userInfo.phoneNumber = phoneNumberText
+    }
+    
     @objc private func certificationBtnDidTap(_ sender: UIButton) {
+        inputUserPhoneNumberData()
         viewModel.pushInputUserIdVC()
     }
     

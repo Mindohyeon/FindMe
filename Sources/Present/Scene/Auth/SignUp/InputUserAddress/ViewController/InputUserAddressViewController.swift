@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InputUserAddressViewController: BaseVC<BaseViewModel> {
+class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
     private let descriptionPageLabel = UILabel().then {
         $0.text = "분실물 배송을 위해 주소를 입력해주세요."
         $0.font = .systemFont(ofSize: 16)
@@ -26,8 +26,20 @@ class InputUserAddressViewController: BaseVC<BaseViewModel> {
         $0.backgroundColor = .clear
     }
     
-    private let completeButton = CustomButton().then {
+    private lazy var completeButton = CustomButton().then {
         $0.setUpTitle(title: "완료")
+        $0.addTarget(self, action: #selector(completeButtonDidTap(_:)), for: .touchUpInside)
+    }
+    
+    private func completeInsertData() {
+        guard let address = inputUserAddressTextField.text else { return }
+        let userInfo = SignUpModel.share
+        userInfo.address = address
+    }
+    
+    @objc private func completeButtonDidTap(_ sender: UIButton) {
+        completeInsertData()
+        viewModel.fetch()
     }
     
     override func addView() {
