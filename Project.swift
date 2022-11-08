@@ -8,7 +8,8 @@ let project = Project(
     name: projectName,
     organizationName: organizationName, packages: [
         .SnapKit,
-        .Then
+        .Then,
+        .Alamofire
     ],
     targets: [
         Target(
@@ -22,7 +23,8 @@ let project = Project(
             resources: ["Resources/**"],
             dependencies: [
                 .SPM.SnapKit,
-                .SPM.Then
+                .SPM.Then,
+                .SPM.Alamofire
             ]
         )
     ]
