@@ -31,13 +31,21 @@ class InputUserAddressViewModel: BaseViewModel {
             print("HTTP Body Error")
         }
         
-        AF.request(request).responseData { response in
+        AF.request(request).responseData { [weak self] response in
             print(response.response?.statusCode)
-            switch response.result {
-            case .success:
-                print("POST 성공")
-            case .failure(let error):
-                print("error = \(error.errorDescription)")
+            switch response.response?.statusCode {
+            case 200, 201:
+                print("회원가입 성공")
+                self?.popToRootVC()
+                break;
+            case 400:
+                print("- 아이디를 입력하지 않았을 경우비밀번호를 입력하지 않았을 경우 핸드폰 번호를 입력하지 않았을 경우 이름을 입력하지 않았을 경우 이름을 입력하지 않았을 경우")
+                
+            case 409:
+                print("이미 있는 아이디")
+                
+            default:
+                print("what")
             }
         }
     }

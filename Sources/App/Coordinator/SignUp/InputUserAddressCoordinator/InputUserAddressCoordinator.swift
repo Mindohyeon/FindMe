@@ -19,7 +19,7 @@ class InputUserAddressCoordinator: baseCoordinator {
     override func navigate(to step: FMStep) {
         switch step {
         case .popToRootViewIsRequired:
-            popToROotViewIsRequired()
+            popToRootViewIsRequired()
             
         default:
             return
@@ -28,7 +28,8 @@ class InputUserAddressCoordinator: baseCoordinator {
 }
 
 private extension InputUserAddressCoordinator {
-    private func popToROotViewIsRequired() {
+    private func popToRootViewIsRequired() {
+        print("pop")
         self.navigationController.popToRootViewController(animated: true)
     }
 }
