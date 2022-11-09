@@ -21,8 +21,9 @@ class SignInViewController: BaseVC<SignInViewModel> {
         $0.setPlaceholder(placeholder: "비밀번호를 입력해주세요.")
     }
     
-    private let signInButton = CustomButton().then {
+    private lazy var signInButton = CustomButton().then {
         $0.setUpTitle(title: "로그인")
+        $0.addTarget(self, action: #selector(signInButtonDidTap(_:)), for: .touchUpInside)
     }
     
     private let signUpLabel = UILabel().then {
@@ -31,7 +32,14 @@ class SignInViewController: BaseVC<SignInViewModel> {
         $0.isUserInteractionEnabled = true
     }
     
-    @objc func signUpButtondidTap(_ sender: UITapGestureRecognizer) {
+    @objc private func signInButtonDidTap(_ sender: UIButton) {
+        guard let id = inputIdTextField.text else { return }
+        guard let password = inputPasswordTextField.text else { return }
+        
+        viewModel.fetch(id: id, password: password)
+    }
+    
+    @objc private func signUpButtondidTap(_ sender: UITapGestureRecognizer) {
         viewModel.pushPhoneNumberCertifyVC()
     }
     

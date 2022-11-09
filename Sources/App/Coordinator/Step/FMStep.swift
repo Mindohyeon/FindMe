@@ -4,4 +4,5 @@ enum FMStep {
     case inputUserIdIsRequired
     case inputUserNameIsRequired
     case inputUserAddressIsRequired
+    case popToRootViewIsRequired
 }

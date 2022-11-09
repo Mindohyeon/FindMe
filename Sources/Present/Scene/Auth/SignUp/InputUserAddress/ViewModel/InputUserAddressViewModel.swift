@@ -13,6 +13,10 @@ class InputUserAddressViewModel: BaseViewModel {
     let url = APIConstants.signUpURL
     let userInfo = SignUpModel.share
     
+    func popToRootVC() {
+        coordinator.navigate(to: .popToRootViewIsRequired)
+    }
+    
     func fetch() {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
