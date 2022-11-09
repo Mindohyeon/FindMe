@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 
+
 class SignInViewModel: BaseViewModel {
     let url = APIConstants.signInURL
     
@@ -16,10 +17,12 @@ class SignInViewModel: BaseViewModel {
         coordinator.navigate(to: .phoneNumberCertityIsRequired)
     }
     
+    
     func fetch(id: String, password: String) {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        request.setValue( "Bearer here is the token", forHTTPHeaderField: "Authorization")
         
         let params = ["id": id, "password": password]
         
@@ -31,11 +34,17 @@ class SignInViewModel: BaseViewModel {
         
         AF.request(request).responseData { response in
             print(response.response?.statusCode)
-            switch response.result {
-            case .success:
-                print("POST 성공")
-            case .failure(let error):
-                print("error = \(error.errorDescription)")
+            switch response.response?.statusCode {
+            case 200:
+                print(response.request?.headers["Authorization"] ?? "")
+                print("성공")
+            case 400:
+                print("- 아이디를 입력하지 않았을 경우 비밀번호를 입력하지 않았을 경우 비밀번호가 일치하지 않은 경우 비밀번호가 5-20자리가 아닌 경우 비밀번호가 영어, 숫자 둘중 하나도 없는 경우")
+            case 404:
+                print("아이디가 없는 경우")
+                
+            default:
+                print("what")
             }
         }
     }
