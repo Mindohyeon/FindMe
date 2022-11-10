@@ -9,6 +9,8 @@
 import UIKit
 
 class TabBarCoordinator: baseCoordinator {
+    var childCoordinator: [Coordinator] = []
+    
     override func start() {
         let tabBarViewController = UITabBarController()
         
@@ -23,19 +25,23 @@ class TabBarCoordinator: baseCoordinator {
         firstVC.tabBarItem = firstItem
         let firstCoordinator = MapCoodinator(navigationController: firstVC)
         firstCoordinator.parentCoordinator = self
+        childCoordinators.append(firstCoordinator)
         
         let secondVC = UINavigationController()
         secondVC.tabBarItem = secondItem
         let secondCoordinator = HomeCoordinator(navigationController: secondVC)
         secondCoordinator.parentCoordinator = self
+        childCoordinators.append(secondCoordinator)
         
         let thirdVC = UINavigationController()
         thirdVC.tabBarItem = thirdItem
         let thirdCoodinator = ChatCoordinator(navigationController: thirdVC)
         thirdCoodinator.parentCoordinator = self
+        childCoordinators.append(thirdCoodinator)
         
         tabBarViewController.viewControllers = [firstVC, secondVC, thirdVC]
 //        tabBarViewController.setViewControllers([tabBarViewController], animated: true)
+        tabBarViewController.modalPresentationStyle = .fullScreen
         navigationController.present(tabBarViewController, animated: true)
         
         start(coordinator: firstCoordinator)

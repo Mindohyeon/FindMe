@@ -9,5 +9,10 @@
 import Foundation
 
 class ChatCoordinator: baseCoordinator {
-    
+    override func start() {
+        let vm = ChatViewModel(coordinator: self)
+        let vc = ChatViewController(viewModel: vm)
+        
+        navigationController.pushViewController(vc, animated: true)
+    }
 }
