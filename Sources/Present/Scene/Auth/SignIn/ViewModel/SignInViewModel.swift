@@ -17,6 +17,10 @@ class SignInViewModel: BaseViewModel {
         coordinator.navigate(to: .phoneNumberCertityIsRequired)
     }
     
+    func pushTabBarVC() {
+        coordinator.navigate(to: .pushTabBarIsRequired)
+    }
+    
     
     func fetch(id: String, password: String) {
         var request = URLRequest(url: URL(string: url)!)

@@ -37,6 +37,8 @@ class SignInViewController: BaseVC<SignInViewModel> {
         guard let password = inputPasswordTextField.text else { return }
         
         viewModel.fetch(id: id, password: password)
+        print("")
+        viewModel.pushTabBarVC()
     }
     
     @objc private func signUpButtondidTap(_ sender: UITapGestureRecognizer) {

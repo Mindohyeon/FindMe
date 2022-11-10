@@ -21,11 +21,26 @@ class TabBarCoordinator: baseCoordinator {
         
         let firstVC = UINavigationController()
         firstVC.tabBarItem = firstItem
-        let firstCoordinator = MainCoordinator(navigationController: firstVC)
+        let firstCoordinator = MapCoodinator(navigationController: firstVC)
         firstCoordinator.parentCoordinator = self
         
         let secondVC = UINavigationController()
         secondVC.tabBarItem = secondItem
+        let secondCoordinator = HomeCoordinator(navigationController: secondVC)
+        secondCoordinator.parentCoordinator = self
+        
+        let thirdVC = UINavigationController()
+        thirdVC.tabBarItem = thirdItem
+        let thirdCoodinator = ChatCoordinator(navigationController: thirdVC)
+        thirdCoodinator.parentCoordinator = self
+        
+        tabBarViewController.viewControllers = [firstVC, secondVC, thirdVC]
+//        tabBarViewController.setViewControllers([tabBarViewController], animated: true)
+        navigationController.present(tabBarViewController, animated: true)
+        
+        start(coordinator: firstCoordinator)
+        start(coordinator: secondCoordinator)
+        start(coordinator: thirdCoodinator)
     }
     
 }

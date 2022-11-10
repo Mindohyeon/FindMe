@@ -1,5 +1,5 @@
 //
-//  MainViewController.swift
+//  MainViewModel.swift
 //  FindMe
 //
 //  Created by 민도현 on 2022/11/09.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-class MainViewController: BaseVC<MainViewModel> {
+class HomeViewModel: BaseViewModel {
     
 }
