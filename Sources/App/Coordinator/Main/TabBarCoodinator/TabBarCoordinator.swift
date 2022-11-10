@@ -40,13 +40,13 @@ class TabBarCoordinator: baseCoordinator {
         childCoordinators.append(thirdCoodinator)
         
         tabBarViewController.viewControllers = [firstVC, secondVC, thirdVC]
-//        tabBarViewController.setViewControllers([tabBarViewController], animated: true)
         tabBarViewController.modalPresentationStyle = .fullScreen
-        navigationController.present(tabBarViewController, animated: true)
         
         start(coordinator: firstCoordinator)
         start(coordinator: secondCoordinator)
         start(coordinator: thirdCoodinator)
+        
+        navigationController.present(tabBarViewController, animated: true)
     }
     
 }
