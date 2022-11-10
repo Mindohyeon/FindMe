@@ -14,9 +14,9 @@ class TabBarCoordinator: baseCoordinator {
     override func start() {
         let tabBarViewController = UITabBarController()
         
-        let firstItem = UITabBarItem(title: nil, image: UIImage(systemName: ""), tag: 0)
-        let secondItem = UITabBarItem(title: nil, image: UIImage(systemName: ""), tag: 1)
-        let thirdItem = UITabBarItem(title: nil, image: UIImage(systemName: ""), tag: 2)
+        let firstItem = UITabBarItem(title: nil, image: UIImage(asset: FindMeAsset.Images.mapImg), tag: 0)
+        let secondItem = UITabBarItem(title: nil, image: UIImage(asset: FindMeAsset.Images.homeImg), tag: 1)
+        let thirdItem = UITabBarItem(title: nil, image: UIImage(asset: FindMeAsset.Images.chatImg), tag: 2)
         
         UITabBar.appearance().tintColor = .init(red: 0.39, green: 0.49, blue: 1, alpha: 1)
         UITabBar.appearance().unselectedItemTintColor = .init(red: 0.74, green: 0.77, blue: 0.92, alpha: 1)

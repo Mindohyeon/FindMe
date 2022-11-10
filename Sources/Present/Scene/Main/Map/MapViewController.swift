@@ -9,5 +9,4 @@
 import Foundation
 
 class MapViewController: BaseVC<MapViewModel> {
-    
 }
