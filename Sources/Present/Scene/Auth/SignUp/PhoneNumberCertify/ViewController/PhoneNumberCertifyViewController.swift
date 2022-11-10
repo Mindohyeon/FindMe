@@ -22,6 +22,7 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
     
     private let inputPhoneNumberTextField = UnderLineTextField().then {
         $0.setPlaceholder(placeholder: "전화번호를 입력해주세요.")
+        $0.textColor = .black
     }
     
     private lazy var sendCertificationNumberButton = UIButton().then {
@@ -33,8 +34,9 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
     }
     
     private let inputCertificationNumber = UnderLineTextField().then {
-        $0.textContentType = .oneTimeCode
         $0.setPlaceholder(placeholder: "인증번호를 입력해주세요.")
+        $0.textColor = .black
+        $0.textContentType = .oneTimeCode
     }
     
     private lazy var certificationButton = CustomButton().then {

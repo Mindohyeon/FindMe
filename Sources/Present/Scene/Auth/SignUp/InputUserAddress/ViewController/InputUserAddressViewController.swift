@@ -17,6 +17,7 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
     
     private let inputUserAddressTextField = UnderLineTextField().then {
         $0.setPlaceholder(placeholder: "주소를 입력해주세요.")
+        $0.textColor = .black
     }
     
     private let addressSearchButton = UIButton().then {

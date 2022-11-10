@@ -15,10 +15,12 @@ class SignInViewController: BaseVC<SignInViewModel> {
     
     private let inputIdTextField = UnderLineTextField().then {
         $0.setPlaceholder(placeholder: "아이디를 입력해주세요.")
+        $0.textColor = .black
     }
     
     private let inputPasswordTextField = UnderLineTextField().then {
         $0.setPlaceholder(placeholder: "비밀번호를 입력해주세요.")
+        $0.textColor = .black
     }
     
     private lazy var signInButton = CustomButton().then {
@@ -38,7 +40,6 @@ class SignInViewController: BaseVC<SignInViewModel> {
         guard let password = inputPasswordTextField.text else { return }
         
         viewModel.fetch(id: id, password: password)
-        print("")
         viewModel.pushTabBarVC()
     }
     

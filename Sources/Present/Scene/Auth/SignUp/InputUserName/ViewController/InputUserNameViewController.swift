@@ -19,6 +19,7 @@ class InputUserNameViewController: BaseVC<InputUserNameViewModel> {
     
     private let inputUserNameTextField = UnderLineTextField().then {
         $0.setPlaceholder(placeholder: "이름(실명)을 입력해주세요.")
+        $0.textColor = .black
     }
     
     private lazy var nextbutton = CustomButton().then {
