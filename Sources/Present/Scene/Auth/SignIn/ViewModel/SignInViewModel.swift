@@ -26,7 +26,7 @@ class SignInViewModel: BaseViewModel {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//        request.setValue( "Bearer here is the token", forHTTPHeaderField: "Authorization")
+//        request.addValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         let params = ["id": id, "password": password]
         
@@ -36,7 +36,8 @@ class SignInViewModel: BaseViewModel {
             print("HTTP Body Error")
         }
         
-        AF.request(request).responseData { response in
+        AF.request(request).responseString { response in
+            //response.result == 토큰
             print(response.response?.statusCode)
             switch response.response?.statusCode {
             case 200:

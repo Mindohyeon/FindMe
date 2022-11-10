@@ -11,6 +11,7 @@ import UIKit
 class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
     private let descriptionPageLabel = UILabel().then {
         $0.text = "분실물 배송을 위해 주소를 입력해주세요."
+        $0.textColor = .black
         $0.font = .systemFont(ofSize: 16)
         $0.textAlignment = .center
     }
