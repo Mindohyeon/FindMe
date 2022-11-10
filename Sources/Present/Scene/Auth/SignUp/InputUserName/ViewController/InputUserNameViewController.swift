@@ -11,6 +11,7 @@ import UIKit
 class InputUserNameViewController: BaseVC<InputUserNameViewModel> {
     private let descriptionPageLabel = UILabel().then {
         $0.text = "분실물 배송 및 보안을 위해서\n 이름(실명)을 입력해주세요."
+        $0.textColor = .black
         $0.textAlignment = .center
         $0.font = .systemFont(ofSize: 16)
         $0.numberOfLines = 0

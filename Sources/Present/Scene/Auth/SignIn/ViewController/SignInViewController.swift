@@ -27,6 +27,7 @@ class SignInViewController: BaseVC<SignInViewModel> {
     }
     
     private let signUpLabel = UILabel().then {
+        $0.textColor = .black
         $0.text = "아이디가 없으신가요? 회원가입 하러가기"
         $0.font = .systemFont(ofSize: 13)
         $0.isUserInteractionEnabled = true
