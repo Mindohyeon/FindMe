@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PhoneNumberCertifyController: BaseVC<PhoneNumberCerticyViewModel> {
+class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
     private let phoneImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.image = UIImage(systemName: "phone.fill")

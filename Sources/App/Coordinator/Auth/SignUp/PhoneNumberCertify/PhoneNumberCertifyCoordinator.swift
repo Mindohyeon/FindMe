@@ -11,7 +11,7 @@ import Foundation
 class PhoneNumberCertifyCoordinator: baseCoordinator {
     
     override func start() {
-        let vm = PhoneNumberCerticyViewModel(coordinator: self)
+        let vm = PhoneNumberCertifyViewModel(coordinator: self)
         let vc = PhoneNumberCertifyController(viewModel: vm)
         
         navigationController.pushViewController(vc, animated: true)
