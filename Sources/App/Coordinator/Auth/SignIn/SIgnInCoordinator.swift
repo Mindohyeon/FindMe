@@ -21,6 +21,9 @@ class SignInCoordinator: baseCoordinator {
         switch step {
         case .phoneNumberCertityIsRequired:
             phoneNumberCerticyIsRequired()
+            
+        case .pushTabBarIsRequired:
+            pushTabBarIsRequired()
 
         default:
             return
@@ -34,5 +37,10 @@ private extension SignInCoordinator {
         vc.parentCoordinator = self
         childCoordinators.append(vc)
         vc.start()
+    }
+    
+    private func pushTabBarIsRequired() {
+        let tabBarController = TabBarCoordinator(navigationController: navigationController)
+        start(coordinator: tabBarController)
     }
 }

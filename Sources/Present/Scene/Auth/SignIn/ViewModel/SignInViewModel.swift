@@ -17,6 +17,10 @@ class SignInViewModel: BaseViewModel {
         coordinator.navigate(to: .phoneNumberCertityIsRequired)
     }
     
+    func pushTabBarVC() {
+        coordinator.navigate(to: .pushTabBarIsRequired)
+    }
+    
     
     func fetch(id: String, password: String) {
         var request = URLRequest(url: URL(string: url)!)
@@ -36,7 +40,6 @@ class SignInViewModel: BaseViewModel {
             print(response.response?.statusCode)
             switch response.response?.statusCode {
             case 200:
-                print(response.request?.headers["Authorization"] ?? "")
                 print("성공")
             case 400:
                 print("- 아이디를 입력하지 않았을 경우 비밀번호를 입력하지 않았을 경우 비밀번호가 일치하지 않은 경우 비밀번호가 5-20자리가 아닌 경우 비밀번호가 영어, 숫자 둘중 하나도 없는 경우")
