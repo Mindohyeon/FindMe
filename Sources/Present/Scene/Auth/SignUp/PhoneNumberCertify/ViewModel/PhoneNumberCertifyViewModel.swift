@@ -6,8 +6,8 @@
 //  Copyright © 2022 com.dohyeon. All rights reserved.
 //
 
-import Foundation
 import Alamofire
+import UIKit
 
 class PhoneNumberCertifyViewModel: BaseViewModel {
     
@@ -47,7 +47,7 @@ class PhoneNumberCertifyViewModel: BaseViewModel {
         }
     }
     
-    func checkCertificationNumber(phoneNumber: String, authkey: Int) {
+    func checkCertificationNumber(phoneNumber: String, authkey: Int, textField: UITextField) {
         let url = APIConstants.checkCertificationNumberURL
         print("authKey = \(authkey)")
         var request = URLRequest(url: URL(string: url)!)
@@ -70,14 +70,8 @@ class PhoneNumberCertifyViewModel: BaseViewModel {
                 print("인증번호 인증 성공")
                 self?.pushInputUserIdVC()
                 
-            case 400:
-                print("- 인증번호 인증 실패했을 경우 인증번호, 인증키가 입력되지 않은 경우")
-                
-            case 404:
-                print("핸드폰 번호가 db에 저장되있지 않은 경우")
-                
             default:
-                print("what")
+                textField.shake()
             }
         }
     }

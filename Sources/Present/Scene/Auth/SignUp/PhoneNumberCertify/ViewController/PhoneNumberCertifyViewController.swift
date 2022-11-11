@@ -23,6 +23,7 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
     private let inputPhoneNumberTextField = UnderLineTextField().then {
         $0.setPlaceholder(placeholder: "전화번호를 입력해주세요.")
         $0.textColor = .black
+        $0.keyboardType = .numberPad
     }
     
     private lazy var sendCertificationNumberButton = UIButton().then {
@@ -37,11 +38,18 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
         $0.setPlaceholder(placeholder: "인증번호를 입력해주세요.")
         $0.textColor = .black
         $0.textContentType = .oneTimeCode
+        $0.keyboardType = .numberPad
     }
     
     private lazy var certificationButton = CustomButton().then {
         $0.setUpTitle(title: "다음")
         $0.addTarget(self, action: #selector(certificationBtnDidTap(_:)), for: .touchUpInside)
+    }
+    
+    private let errorLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 13)
+        $0.textColor = .red
+        $0.text = "인증번호를 다시 확인해주세요."
     }
     
     private func inputUserPhoneNumberData() {
@@ -58,8 +66,13 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
     @objc private func certificationBtnDidTap(_ sender: UIButton) {
         guard let phoneNumber = inputPhoneNumberTextField.text else { return }
         guard let authKey = inputCertificationNumber.text else { return }
-        viewModel.checkCertificationNumber(phoneNumber: phoneNumber, authkey: Int(authKey) ?? 0)
-        inputUserPhoneNumberData()
+        
+        if authKey.count == 4 {
+            viewModel.checkCertificationNumber(phoneNumber: phoneNumber, authkey: Int(authKey) ?? 0, textField: inputCertificationNumber)
+            inputUserPhoneNumberData()
+        } else {
+            inputCertificationNumber.shake()
+        }
     }
     
     override func addView() {
