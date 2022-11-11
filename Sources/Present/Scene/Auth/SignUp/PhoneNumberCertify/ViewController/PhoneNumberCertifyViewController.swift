@@ -56,8 +56,10 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
     }
     
     @objc private func certificationBtnDidTap(_ sender: UIButton) {
+        guard let phoneNumber = inputPhoneNumberTextField.text else { return }
+        guard let authKey = inputCertificationNumber.text else { return }
+        viewModel.checkCertificationNumber(phoneNumber: phoneNumber, authkey: Int(authKey) ?? 0)
         inputUserPhoneNumberData()
-        viewModel.pushInputUserIdVC()
     }
     
     override func addView() {

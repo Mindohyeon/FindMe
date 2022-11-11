@@ -13,5 +13,6 @@ class APIConstants {
     static let signUpURL = url + "/auth/signup"
     static let signInURL = url + "/auth/signin"
     static let sendPhoneNumberURL = url + "/auth/send"
+    static let checkCertificationNumberURL = url + "/auth/check"
 }
 
