@@ -72,12 +72,13 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
             viewModel.checkCertificationNumber(phoneNumber: phoneNumber, authkey: Int(authKey) ?? 0, textField: inputCertificationNumber)
             inputUserPhoneNumberData()
         } else {
+            errorLabel.isHidden = false
             inputCertificationNumber.shake()
         }
     }
     
     override func addView() {
-        view.addSubViews(phoneImageView, descriptionPageLabel,                                 inputPhoneNumberTextField, inputCertificationNumber,
+        view.addSubViews(phoneImageView, descriptionPageLabel, inputPhoneNumberTextField, inputCertificationNumber,
                          sendCertificationNumberButton, certificationButton, errorLabel)
     }
     
@@ -123,7 +124,7 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
     override func bindVM() {
         viewModel.errorLabelIsVisible.bind { [weak self] visible in
             DispatchQueue.main.async {
-                self?.errorLabel.isHidden = visible ? false : true
+                self?.errorLabel.isHidden = visible ? true : false
             }
         }
     }

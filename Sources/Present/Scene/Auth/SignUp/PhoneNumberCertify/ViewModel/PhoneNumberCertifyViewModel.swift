@@ -11,7 +11,7 @@ import UIKit
 
 class PhoneNumberCertifyViewModel: BaseViewModel {
     
-    var errorLabelIsVisible = Observable(false)
+    var errorLabelIsVisible = Observable(true)
     
     func pushInputUserIdVC() {
         coordinator.navigate(to: .inputUserIdIsRequired)
@@ -65,9 +65,10 @@ class PhoneNumberCertifyViewModel: BaseViewModel {
             case 200:
                 print("인증번호 인증 성공")
                 self?.pushInputUserIdVC()
+                self?.errorLabelIsVisible.value = true
                 
             default:
-                self?.errorLabelIsVisible.value = true
+                self?.errorLabelIsVisible.value = false
                 textField.shake()
             }
         }
