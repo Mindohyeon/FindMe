@@ -11,6 +11,8 @@ import UIKit
 
 class PhoneNumberCertifyViewModel: BaseViewModel {
     
+    var errorLabelIsVisible = Observable(false)
+    
     func pushInputUserIdVC() {
         coordinator.navigate(to: .inputUserIdIsRequired)
     }
@@ -34,12 +36,6 @@ class PhoneNumberCertifyViewModel: BaseViewModel {
             switch response.response?.statusCode {
             case 200:
                 print("메세지 발급 성공")
-                
-            case 400:
-                print("핸드폰 번호가 입력되지 않은 경우")
-                
-            case 500:
-                print("발송 실패")
                 
             default:
                 print("what")
@@ -71,6 +67,7 @@ class PhoneNumberCertifyViewModel: BaseViewModel {
                 self?.pushInputUserIdVC()
                 
             default:
+                self?.errorLabelIsVisible.value = true
                 textField.shake()
             }
         }

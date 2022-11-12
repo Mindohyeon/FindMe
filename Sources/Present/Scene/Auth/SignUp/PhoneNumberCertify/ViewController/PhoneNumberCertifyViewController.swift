@@ -47,9 +47,10 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
     }
     
     private let errorLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 13)
-        $0.textColor = .red
         $0.text = "인증번호를 다시 확인해주세요."
+        $0.textColor = .red
+        $0.font = .systemFont(ofSize: 13)
+        $0.isHidden = true
     }
     
     private func inputUserPhoneNumberData() {
@@ -76,8 +77,8 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
     }
     
     override func addView() {
-        view.addSubViews(phoneImageView, descriptionPageLabel, inputPhoneNumberTextField, inputCertificationNumber,
-                         sendCertificationNumberButton, certificationButton)
+        view.addSubViews(phoneImageView, descriptionPageLabel,                                 inputPhoneNumberTextField, inputCertificationNumber,
+                         sendCertificationNumberButton, certificationButton, errorLabel)
     }
     
     override func setLayout() {
@@ -102,6 +103,11 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         
+        errorLabel.snp.makeConstraints {
+            $0.top.equalTo(inputCertificationNumber.snp.bottom).offset(20)
+            $0.leading.equalTo(inputCertificationNumber.snp.leading)
+        }
+        
         sendCertificationNumberButton.snp.makeConstraints {
             $0.top.equalTo(inputPhoneNumberTextField.snp.top).offset(-3)
             $0.trailing.equalTo(inputPhoneNumberTextField.snp.trailing)
@@ -113,5 +119,14 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
             $0.height.equalTo(48)
         }
     }
+    
+    override func bindVM() {
+        viewModel.errorLabelIsVisible.bind { [weak self] visible in
+            DispatchQueue.main.async {
+                self?.errorLabel.isHidden = visible ? false : true
+            }
+        }
+    }
 }
+
 
