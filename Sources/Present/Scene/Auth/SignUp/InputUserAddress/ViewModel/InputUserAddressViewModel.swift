@@ -10,14 +10,26 @@ import Foundation
 import Alamofire
 
 class InputUserAddressViewModel: BaseViewModel {
-    let url = APIConstants.signUpURL
     let userInfo = SignUpModel.share
     
     func popToRootVC() {
         coordinator.navigate(to: .popToRootViewIsRequired)
     }
     
+    func getAddress(address: String) {
+        let url = APIConstants.getAddress + address + "&confmKey=devU01TX0FVVEgyMDIyMTEwNzE4MDQ1MjExMzE5NTY="
+        AF.request(url,
+                   method: .get,
+                   encoding: URLEncoding.default,
+                   headers: ["Content-Type":"application/json", "Accept":"application/json"])
+        .validate(statusCode: 200..<300)
+        .responseJSON { response in
+            print(response)
+        }
+    }
+    
     func fetch() {
+        let url = APIConstants.signUpURL
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")

@@ -14,5 +14,6 @@ class APIConstants {
     static let signInURL = url + "/auth/signin"
     static let sendPhoneNumberURL = url + "/auth/send"
     static let checkCertificationNumberURL = url + "/auth/check"
+    static let getAddress = "https://business.juso.go.kr/addrlink/addrLinkApi.do?currentPage=1&countPerPage=10&keyword="
 }
 
