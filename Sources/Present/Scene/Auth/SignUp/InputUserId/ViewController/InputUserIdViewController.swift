@@ -11,20 +11,24 @@ import UIKit
 class InputUserIdViewController: BaseVC<InputUserIdViewModel> {
     private let descriptionPageLabel = UILabel().then {
         $0.text = "사용하실 아이디와 비밀번호를 입력해주세요."
+        $0.textColor = .black
         $0.textAlignment = .center
         $0.font = .systemFont(ofSize: 16)
     }
     
     private let inputIdTextField = UnderLineTextField().then {
         $0.setPlaceholder(placeholder: "아이디를 입력해주세요.")
+        $0.textColor = .black
     }
     
     private let inputPasswordTextField = UnderLineTextField().then {
         $0.setPlaceholder(placeholder: "비밀번호를 입력해주세요.")
+        $0.textColor = .black
     }
     
     private let inputCheckPasswordTextField = UnderLineTextField().then {
         $0.setPlaceholder(placeholder: "비밀번호를 다시 입력해주세요.")
+        $0.textColor = .black
     }
     
     private lazy var nextButton = CustomButton().then {
