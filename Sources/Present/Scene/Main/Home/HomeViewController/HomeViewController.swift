@@ -9,5 +9,8 @@
 import Foundation
 
 class HomeViewController: BaseVC<HomeViewModel> {
-    
+    override func configureVC() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "찾고있는 물건들"
+    }
 }
