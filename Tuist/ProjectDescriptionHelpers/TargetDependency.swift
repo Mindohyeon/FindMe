@@ -8,6 +8,7 @@ public extension TargetDependency.SPM {
     static let SnapKit = TargetDependency.package(product: "SnapKit")
     static let Then = TargetDependency.package(product: "Then")
     static let Alamofire = TargetDependency.package(product: "Alamofire")
+    static let Tabman = TargetDependency.package(product: "Tabman")
 }
 
 public extension Package {
@@ -20,4 +21,7 @@ public extension Package {
     static let Alamofire = Package.remote(
         url: "https://github.com/Alamofire/Alamofire",
         requirement: .upToNextMajor(from: "5.6.1"))
+    static let Tabman = Package.remote(
+        url: "https://github.com/uias/Tabman",
+        requirement: .upToNextMajor(from: "3.0.1"))
 }
