@@ -68,13 +68,15 @@ class PhoneNumberCertifyController: BaseVC<PhoneNumberCertifyViewModel> {
         guard let phoneNumber = inputPhoneNumberTextField.text else { return }
         guard let authKey = inputCertificationNumber.text else { return }
         
-        if authKey.count == 4 {
-            viewModel.checkCertificationNumber(phoneNumber: phoneNumber, authkey: Int(authKey) ?? 0, textField: inputCertificationNumber)
-            inputUserPhoneNumberData()
-        } else {
-            errorLabel.isHidden = false
-            inputCertificationNumber.shake()
-        }
+        viewModel.pushInputUserIdVC()
+        
+//        if authKey.count == 4 {
+//            viewModel.checkCertificationNumber(phoneNumber: phoneNumber, authkey: Int(authKey) ?? 0, textField: inputCertificationNumber)
+//            inputUserPhoneNumberData()
+//        } else {
+//            errorLabel.isHidden = false
+//            inputCertificationNumber.shake()
+//        }
     }
     
     override func addView() {

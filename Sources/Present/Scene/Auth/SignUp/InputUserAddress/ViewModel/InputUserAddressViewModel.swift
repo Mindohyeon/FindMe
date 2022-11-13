@@ -23,8 +23,17 @@ class InputUserAddressViewModel: BaseViewModel {
                    encoding: URLEncoding.default,
                    headers: ["Content-Type":"application/json", "Accept":"application/json"])
         .validate(statusCode: 200..<300)
-        .responseJSON { response in
-            print(response)
+        .responseData { response in
+            do {
+                switch response.result {
+                case .success(_):
+                    print("this is fetch function")
+                    print("jsonData = \(response)")
+                    
+                case .failure(let error):
+                    print("error!! = \(error)")
+                }
+            }
         }
     }
     
@@ -42,6 +51,7 @@ class InputUserAddressViewModel: BaseViewModel {
         } catch {
             print("HTTP Body Error")
         }
+        
         
         AF.request(request).responseData { [weak self] response in
             print(response.response?.statusCode)

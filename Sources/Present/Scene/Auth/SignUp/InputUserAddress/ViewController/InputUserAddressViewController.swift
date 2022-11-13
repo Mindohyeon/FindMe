@@ -21,11 +21,12 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
         $0.textColor = .black
     }
     
-    private let addressSearchButton = UIButton().then {
+    private lazy var addressSearchButton = UIButton().then {
         $0.setTitle("주소찾기", for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
         $0.setTitleColor(FindMeAsset.Colors.findmeMainColor.color, for: .normal)
         $0.backgroundColor = .clear
+        $0.addTarget(self, action: #selector(searchAddress(_:)), for: .touchUpInside)
     }
     
     private lazy var completeButton = CustomButton().then {
@@ -37,6 +38,11 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
         guard let address = inputUserAddressTextField.text else { return }
         let userInfo = SignUpModel.share
         userInfo.address = address
+    }
+    
+    @objc private func searchAddress(_ sender: UIButton) {
+        guard let address = inputUserAddressTextField.text else { return }
+        viewModel.getAddress(address: address)
     }
     
     @objc private func completeButtonDidTap(_ sender: UIButton) {
