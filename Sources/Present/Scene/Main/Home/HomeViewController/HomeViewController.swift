@@ -13,7 +13,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
     private let viewControllers = ["전체", "전자기기", "귀금속", "의류", "생활용품", "기타"]
     
     private let profileButton = UIButton().then {
-        $0.setImage(UIImage(named: FindMeAsset.Images.profileIcon.name), for: .normal)
+        $0.setImage(UIImage(named: FindMeAsset.Images.profileIcon.name)?.resize(newWidth: 35), for: .normal)
     }
     
     override func configureVC() {
@@ -28,7 +28,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
     override func setLayout() {
         profileButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(-45)
-            $0.trailing.equalToSuperview().inset(12)
+            $0.trailing.equalToSuperview().inset(15)
         }
     }
 }
