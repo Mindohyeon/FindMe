@@ -17,10 +17,17 @@ class InputUserAddressViewModel: BaseViewModel {
     }
     
     func getAddress(address: String) {
-        let url = APIConstants.getAddress + address + "&confmKey=devU01TX0FVVEgyMDIyMTEwNzE4MDQ1MjExMzE5NTY="
+        let params: Parameters = [
+            "currentPage": 1,
+            "countPerPage": 10,
+            "keyword": address,
+            "confmKey": "devU01TX0FVVEgyMDIyMTEwNzE4MDQ1MjExMzE5NTY="
+        ]
+        let url = APIConstants.getAddress
         AF.request(url,
                    method: .get,
-                   encoding: URLEncoding.default,
+                   parameters: params,
+                   encoding: URLEncoding.queryString,
                    headers: ["Content-Type":"application/json", "Accept":"application/json"])
         .validate(statusCode: 200..<300)
         .responseData { response in
