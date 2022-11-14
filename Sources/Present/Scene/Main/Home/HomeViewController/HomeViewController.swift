@@ -8,27 +8,95 @@
 
 import UIKit
 import Tabman
+import Pageboy
 
-class HomeViewController: BaseVC<HomeViewModel> {
-    private let viewControllers = ["전체", "전자기기", "귀금속", "의류", "생활용품", "기타"]
+class HomeViewController: TabmanViewController {
+    private let viewControllers = [AllViewController(), ElectronicViewController(), PreciousMetalsViewController(),
+                                   ClothingViewController(), HouseholdGoodsViewController(), EtcViewController()]
+    
+    private let bar = TMBar.ButtonBar()
     
     private let profileButton = UIButton().then {
         $0.setImage(UIImage(named: FindMeAsset.Images.profileIcon.name)?.resize(newWidth: 35), for: .normal)
     }
     
-    override func configureVC() {
+    override func viewDidLoad() {
+        view.backgroundColor = .white
+        configureVC()
+        addView()
+        setLayout()
+        
+        self.dataSource = self
+        settingTabBar(ctBar: bar)
+        addBar(bar, dataSource: self, at: .top)
+    }
+    
+    private func configureVC() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "찾고있는 물건들"
     }
     
-    override func addView() {
+    private func addView() {
         view.addSubViews(profileButton)
     }
     
-    override func setLayout() {
+    private func setLayout() {
         profileButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(-45)
             $0.trailing.equalToSuperview().inset(15)
         }
+    }
+    
+    
+    func settingTabBar (ctBar : TMBar.ButtonBar) {
+        ctBar.layout.transitionStyle = .snap
+        // 왼쪽 여백주기
+        ctBar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 13.0, bottom: 0.0, right: 20.0)
+        
+        // 간격
+        ctBar.layout.interButtonSpacing = 35
+            
+        ctBar.backgroundView.style = .blur(style: .light)
+        
+        // 선택 / 안선택 색 + font size
+        ctBar.buttons.customize { (button) in
+            button.tintColor = .black
+            button.selectedTintColor = .black
+            button.font = UIFont.systemFont(ofSize: 16)
+            button.selectedFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+        }
+        
+        // 인디케이터 (영상에서 주황색 아래 바 부분)
+        ctBar.indicator.weight = .custom(value: 2)
+        ctBar.indicator.tintColor = .orange
+    }
+}
+
+extension HomeViewController: PageboyViewControllerDataSource, TMBarDataSource {
+    func numberOfViewControllers(in pageboyViewController: Pageboy.PageboyViewController) -> Int {
+        return viewControllers.count
+    }
+    
+    func viewController(for pageboyViewController: Pageboy.PageboyViewController, at index: Pageboy.PageboyViewController.PageIndex) -> UIViewController? {
+        return viewControllers[index]
+    }
+    
+    func defaultPage(for pageboyViewController: Pageboy.PageboyViewController) -> Pageboy.PageboyViewController.Page? {
+        nil
+    }
+    
+    func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
+        var title = ""
+        switch index {
+        case 0: title = "전체"
+        case 1: title = "전자기기"
+        case 2: title = "귀금속"
+        case 3: title = "의류"
+        case 4: title = "생활 용품"
+        case 5: title = "기타"
+        default:
+            title = "default"
+        }
+        return TMBarItem(title: title)
     }
 }

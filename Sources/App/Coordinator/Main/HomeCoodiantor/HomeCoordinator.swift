@@ -10,8 +10,8 @@ import Foundation
 
 class HomeCoordinator: baseCoordinator {
     override func start() {
-        let vm = HomeViewModel(coordinator: self)
-        let vc = HomeViewController(viewModel: vm)
+//        let vm = HomeViewModel(coordinator: self)
+        let vc = HomeViewController()
         
         navigationController.pushViewController(vc, animated: true)
     }
