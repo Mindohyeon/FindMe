@@ -11,6 +11,7 @@ import Alamofire
 
 class InputUserAddressViewModel: BaseViewModel {
     let userInfo = SignUpModel.share
+    var addressModel: [AddressModel] = []
     
     func popToRootVC() {
         coordinator.navigate(to: .popToRootViewIsRequired)
@@ -36,6 +37,7 @@ class InputUserAddressViewModel: BaseViewModel {
                 case .success(_):
                     print("this is fetch function")
                     print("jsonData = \(response)")
+                    
                     
                 case .failure(let error):
                     print("error!! = \(error)")
