@@ -11,7 +11,6 @@ import Alamofire
 
 class InputUserAddressViewModel: BaseViewModel {
     let userInfo = SignUpModel.share
-    var addressModel: [AddressModel] = []
     
     func popToRootVC() {
         coordinator.navigate(to: .popToRootViewIsRequired)
@@ -19,31 +18,40 @@ class InputUserAddressViewModel: BaseViewModel {
     
     func getAddress(address: String) {
         let params: Parameters = [
+            "resultType": "Json",
             "currentPage": 1,
             "countPerPage": 10,
             "keyword": address,
-            "confmKey": "devU01TX0FVVEgyMDIyMTEwNzE4MDQ1MjExMzE5NTY="
+            "confmKey": "&confmKey=devU01TX0FVVEgyMDIyMTEwNzE4MDQ1MjExMzE5NTY="
         ]
+        
         let url = APIConstants.getAddress
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "GET"
+        
         AF.request(url,
                    method: .get,
                    parameters: params,
                    encoding: URLEncoding.queryString,
-                   headers: ["Content-Type":"application/json", "Accept":"application/json"])
+                   headers: ["Content-Type": "application/json", "Accept": "application/json"])
         .validate(statusCode: 200..<300)
         .responseData { response in
             do {
                 switch response.result {
                 case .success(_):
-                    print("this is fetch function")
-                    print("jsonData = \(response)")
+                    print("jsonData = \(response.response?.statusCode)")
                     
+                    let decodeResponse = try! JSONDecoder().decode(AddressModel.self, from: response.data!)
+                    print(decodeResponse)
                     
                 case .failure(let error):
                     print("error!! = \(error)")
                 }
             }
         }
+        //        .responseDecodable(of: AddressModel.self) { response in
+        //            print(response)
+        //        }
     }
     
     func fetch() {
@@ -52,15 +60,19 @@ class InputUserAddressViewModel: BaseViewModel {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let params = ["id": userInfo.id, "password": userInfo.password, "phoneNumber": userInfo.phoneNumber,
-                      "userName": userInfo.userName, "address": userInfo.address]
+        let params = [
+            "id": userInfo.id,
+            "password": userInfo.password,
+            "phoneNumber": userInfo.phoneNumber,
+            "userName": userInfo.userName,
+            "address": userInfo.address
+        ]
         
         do {
             try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
         } catch {
             print("HTTP Body Error")
         }
-        
         
         AF.request(request).responseData { [weak self] response in
             print(response.response?.statusCode)
