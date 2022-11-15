@@ -18,17 +18,14 @@ class InputUserAddressViewModel: BaseViewModel {
     
     func getAddress(address: String) {
         let params: Parameters = [
-            "resultType": "Json",
             "currentPage": 1,
             "countPerPage": 10,
+            "resultType": "JSON",
             "keyword": address,
-            "confmKey": "&confmKey=devU01TX0FVVEgyMDIyMTEwNzE4MDQ1MjExMzE5NTY="
+            "confmKey": "devU01TX0FVVEgyMDIyMTEwNzE4MDQ1MjExMzE5NTY="
         ]
         
         let url = APIConstants.getAddress
-        var request = URLRequest(url: URL(string: url)!)
-        request.httpMethod = "GET"
-        
         AF.request(url,
                    method: .get,
                    parameters: params,
@@ -41,7 +38,7 @@ class InputUserAddressViewModel: BaseViewModel {
                 case .success(_):
                     print("jsonData = \(response.response?.statusCode)")
                     
-                    let decodeResponse = try! JSONDecoder().decode(AddressModel.self, from: response.data!)
+                    let decodeResponse = try? JSONDecoder().decode(AddressModel.self, from: response.data!)
                     print(decodeResponse)
                     
                 case .failure(let error):

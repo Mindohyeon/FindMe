@@ -9,6 +9,23 @@
 import Foundation
 
 struct AddressModel: Codable {
+    var results: Results
+}
+
+struct Results: Codable {
+    var common: Common
+    var juso: [Juso]
+}
+
+struct Common: Codable {
+    var totalCount: String?
+    var currentPage: String?
+    var countPerPage: String?
+    var errorCode: String?
+    var errorMessage: String?
+}
+
+struct Juso: Codable {
     var roadAddr: String?
     var roadAddrPart1: String?
     var jibunAddr: String?
@@ -29,4 +46,5 @@ struct AddressModel: Codable {
     var lnbrMnnm: String?
     var lnbrSlno: String?
     var emdNo: String?
+    var hstryYn: String?
 }
