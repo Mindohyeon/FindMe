@@ -55,8 +55,8 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
     }
     
     override func configureVC() {
-        addressTableView.register(AddressTableViewCell.self, forCellReuseIdentifier: AddressTableViewCell.identifier)
         addressTableView.dataSource = self
+        addressTableView.register(AddressTableViewCell.self, forCellReuseIdentifier: AddressTableViewCell.identifier)
     }
     
     override func addView() {

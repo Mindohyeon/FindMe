@@ -8,6 +8,11 @@
 
 import Foundation
 import Alamofire
+import RxSwift
+
+protocol AddressPresentable: AnyObject {
+    
+}
 
 class InputUserAddressViewModel: BaseViewModel {
     let userInfo = SignUpModel.share
@@ -39,7 +44,7 @@ class InputUserAddressViewModel: BaseViewModel {
                     print("jsonData = \(response.response?.statusCode)")
                     
                     let decodeResponse = try? JSONDecoder().decode(AddressModel.self, from: response.data!)
-                    print(decodeResponse)
+                    
                     
                 case .failure(let error):
                     print("error!! = \(error)")

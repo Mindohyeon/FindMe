@@ -22,6 +22,7 @@ class AddressTableViewCell: baseTableViewCell<AddressModel> {
     }
     
     override func addView() {
+        print("hi")
         contentView.addSubViews(roadName, inputRoadName)
     }
     
