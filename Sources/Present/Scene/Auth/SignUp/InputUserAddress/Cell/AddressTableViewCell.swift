@@ -9,6 +9,8 @@
 import UIKit
 
 class AddressTableViewCell: baseTableViewCell<AddressModel> {
+    static let identifier = "AddressTableViewCell"
+    
     private let roadName = UILabel().then {
         $0.text = "도로명"
         $0.font = .systemFont(ofSize: 13)

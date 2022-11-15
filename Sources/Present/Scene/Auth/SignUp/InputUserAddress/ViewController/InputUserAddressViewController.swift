@@ -9,6 +9,10 @@
 import UIKit
 
 class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
+    private let addressTableView = UITableView()
+    
+    private let dataSource = [AddressModel]()
+    
     private let descriptionPageLabel = UILabel().then {
         $0.text = "분실물 배송을 위해 주소를 입력해주세요."
         $0.textColor = .black
@@ -34,10 +38,6 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
         $0.addTarget(self, action: #selector(completeButtonDidTap(_:)), for: .touchUpInside)
     }
     
-    private let addressTableView = UITableView()
-    
-    private let dataSource = [AddressModel]()
-    
     private func completeInsertData() {
         guard let address = inputUserAddressTextField.text else { return }
         let userInfo = SignUpModel.share
@@ -55,11 +55,12 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
     }
     
     override func configureVC() {
-        addressTableView.register(AddressTableViewCell.self, forCellReuseIdentifier: "AddressTableViewCell")
+        addressTableView.register(AddressTableViewCell.self, forCellReuseIdentifier: AddressTableViewCell.identifier)
+        addressTableView.dataSource = self
     }
     
     override func addView() {
-        view.addSubViews(descriptionPageLabel, inputUserAddressTextField, addressSearchButton, completeButton)
+        view.addSubViews(descriptionPageLabel, inputUserAddressTextField, addressSearchButton, completeButton, addressTableView)
     }
     
     override func setLayout() {
@@ -83,6 +84,12 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(48)
         }
+        
+        addressTableView.snp.makeConstraints {
+            $0.top.equalTo(inputUserAddressTextField.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalTo(completeButton.snp.top).offset(-130)
+        }
     }
 }
 
@@ -92,7 +99,7 @@ extension InputUserAddressViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AddressTableViewCell", for: indexPath) as? AddressTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AddressTableViewCell.identifier, for: indexPath) as? AddressTableViewCell else { return UITableViewCell() }
         return cell
     }
 }
