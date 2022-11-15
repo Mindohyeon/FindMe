@@ -34,6 +34,10 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
         $0.addTarget(self, action: #selector(completeButtonDidTap(_:)), for: .touchUpInside)
     }
     
+    private let addressTableView = UITableView()
+    
+    private let dataSource = [AddressModel]()
+    
     private func completeInsertData() {
         guard let address = inputUserAddressTextField.text else { return }
         let userInfo = SignUpModel.share
@@ -48,6 +52,10 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
     @objc private func completeButtonDidTap(_ sender: UIButton) {
         completeInsertData()
         viewModel.fetch()
+    }
+    
+    override func configureVC() {
+        addressTableView.register(AddressTableViewCell.self, forCellReuseIdentifier: "AddressTableViewCell")
     }
     
     override func addView() {
@@ -75,5 +83,16 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(48)
         }
+    }
+}
+
+extension InputUserAddressViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AddressTableViewCell", for: indexPath) as? AddressTableViewCell else { return UITableViewCell() }
+        return cell
     }
 }
