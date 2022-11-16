@@ -9,7 +9,7 @@
 import Foundation
 
 class APIConstants {
-    static let url = ""
+    static let url = "http://10.82.17.129:8081"
     static let signUpURL = url + "/auth/signup"
     static let signInURL = url + "/auth/signin"
     static let sendPhoneNumberURL = url + "/auth/send"
