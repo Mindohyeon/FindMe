@@ -46,7 +46,6 @@ class SignInViewModel: BaseViewModel {
                 print("- 아이디를 입력하지 않았을 경우 비밀번호를 입력하지 않았을 경우 비밀번호가 일치하지 않은 경우 비밀번호가 5-20자리가 아닌 경우 비밀번호가 영어, 숫자 둘중 하나도 없는 경우")
             case 404:
                 print("아이디가 없는 경우")
-                
             default:
                 print("what")
             }
