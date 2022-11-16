@@ -27,7 +27,7 @@ struct Common: Codable {
 
 struct Juso: Codable {
     var roadAddr: String?
-    var roadAddrPart1: String?
+    var roadAddrPart1: String? 
     var jibunAddr: String?
     var engAddr: String?
     var zipNo: String?

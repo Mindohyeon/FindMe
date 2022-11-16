@@ -11,11 +11,13 @@ import RxSwift
 import RxCocoa
 
 class InputUserAddressViewController: BaseVC<InputUserAddressViewModel>, AddressPresentable {
-    var addressData = PublishSubject<[AddressModel]>()
+//    var addressData = PublishSubject<[AddressModel]>()
+    
+    var addressData = PublishSubject<[Juso]>()
     
     private let addressTableView = UITableView()
     
-//    private let dataSource = [AddressModel]()
+    //    private let dataSource = [AddressModel]()
     
     private let disposeBag = DisposeBag()
     
@@ -51,31 +53,23 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel>, Address
     }
     
     private func bindTableView() {
-        addressData
-            .bind(to: addressTableView.rx.items(cellIdentifier: AddressTableViewCell.identifier, cellType: AddressTableViewCell.self)) { (row, address, cell) in
-                print("address = \(address)")
-                cell.configure(with: address)
-
-            }
-            .disposed(by: disposeBag)
-        
-        addressData.subscribe { data in
-            print("data111 \(data)")
-        } onError: { error in
-            print("Error = \(error)")
-        } onCompleted: {
-            print("complete")
-        } onDisposed: {
-            print("disposed")
+        addressData.bind(to: addressTableView.rx.items(cellIdentifier: AddressTableViewCell.identifier, cellType: AddressTableViewCell.self)) { (row, address, cell) in
+            cell.configure(with: address)
         }
         .disposed(by: disposeBag)
+
+        addressTableView.rx.modelSelected(Juso.self)
+            .subscribe(onNext: { member in
+                print("memeber = \(member.roadAddr)")
+            }).disposed(by: disposeBag)
     }
+    
     
     @objc private func searchAddress(_ sender: UIButton) {
         guard let address = inputUserAddressTextField.text else { return }
         viewModel.getAddress(address: address)
-//        bindTableView()
-//        print("asdf = \(listener?.addressData)")
+        //        bindTableView()
+        //        print("asdf = \(listener?.addressData)")
         print(addressData)
     }
     
@@ -85,7 +79,7 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel>, Address
     }
     
     override func configureVC() {
-//        addressTableView.dataSource = self
+        //        addressTableView.dataSource = self
         viewModel.delegate = self
         addressTableView.register(AddressTableViewCell.self, forCellReuseIdentifier: AddressTableViewCell.identifier)
         bindTableView()

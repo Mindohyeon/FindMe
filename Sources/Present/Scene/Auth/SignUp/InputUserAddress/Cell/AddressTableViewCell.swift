@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddressTableViewCell: baseTableViewCell<AddressModel> {
+class AddressTableViewCell: baseTableViewCell<Juso> {
     static let identifier = "AddressTableViewCell"
     
     private let roadName = UILabel().then {
@@ -21,12 +21,11 @@ class AddressTableViewCell: baseTableViewCell<AddressModel> {
         $0.font = .systemFont(ofSize: 13)
     }
     
-    func configure(with address: AddressModel) {
-        roadName.text = address.results.juso[0].roadAddr
+    func configure(with address: Juso) {
+        inputRoadName.text = address.roadAddr
     }
     
     override func addView() {
-        print("hi")
         contentView.addSubViews(roadName, inputRoadName)
     }
     

@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 
 protocol AddressPresentable: AnyObject {
-    var addressData: PublishSubject<[AddressModel]> { get }
+    var addressData: PublishSubject<[Juso]> { get }
 }
 
 class InputUserAddressViewModel: BaseViewModel {
@@ -45,8 +45,10 @@ class InputUserAddressViewModel: BaseViewModel {
                 //                print("jsonData = \(response.response?.statusCode)")
                 
                 let decodeResponse = try! JSONDecoder().decode(AddressModel.self, from: response.data!)
-                print(decodeResponse)
-                self?.delegate?.addressData.onNext([decodeResponse])
+                
+                print("decode = \(decodeResponse.results.juso)")
+                self?.delegate?.addressData.onNext(decodeResponse.results.juso)
+                self?.delegate?.addressData
                 
             case .failure(let error):
                 print("error!! = \(error)")
