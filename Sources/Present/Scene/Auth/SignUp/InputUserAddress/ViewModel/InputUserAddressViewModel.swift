@@ -17,7 +17,7 @@ protocol AddressPresentable: AnyObject {
 
 class InputUserAddressViewModel: BaseViewModel {
     let userInfo = SignUpModel.share
-    var delegate: AddressPresentable?
+    weak var delegate: AddressPresentable?
     
     func popToRootVC() {
         coordinator.navigate(to: .popToRootViewIsRequired)
@@ -42,13 +42,10 @@ class InputUserAddressViewModel: BaseViewModel {
         .responseDecodable(of: AddressModel.self) { [weak self] response in
             switch response.result {
             case .success(_):
-                //                print("jsonData = \(response.response?.statusCode)")
-                
                 let decodeResponse = try! JSONDecoder().decode(AddressModel.self, from: response.data!)
                 
                 print("decode = \(decodeResponse.results.juso)")
                 self?.delegate?.addressData.onNext(decodeResponse.results.juso)
-                self?.delegate?.addressData
                 
             case .failure(let error):
                 print("error!! = \(error)")

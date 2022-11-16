@@ -11,15 +11,10 @@ import RxSwift
 import RxCocoa
 
 class InputUserAddressViewController: BaseVC<InputUserAddressViewModel>, AddressPresentable {
-//    var addressData = PublishSubject<[AddressModel]>()
-    
     var addressData = PublishSubject<[Juso]>()
-    
     private let addressTableView = UITableView()
-    
-    //    private let dataSource = [AddressModel]()
-    
     private let disposeBag = DisposeBag()
+    private let userInfo = SignUpModel.share
     
     private let descriptionPageLabel = UILabel().then {
         $0.text = "분실물 배송을 위해 주소를 입력해주세요."
@@ -46,40 +41,30 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel>, Address
         $0.addTarget(self, action: #selector(completeButtonDidTap(_:)), for: .touchUpInside)
     }
     
-    private func completeInsertData() {
-        guard let address = inputUserAddressTextField.text else { return }
-        let userInfo = SignUpModel.share
-        userInfo.address = address
-    }
-    
     private func bindTableView() {
         addressData.bind(to: addressTableView.rx.items(cellIdentifier: AddressTableViewCell.identifier, cellType: AddressTableViewCell.self)) { (row, address, cell) in
+            cell.selectionStyle = .gray
             cell.configure(with: address)
         }
         .disposed(by: disposeBag)
-
+        
         addressTableView.rx.modelSelected(Juso.self)
-            .subscribe(onNext: { member in
-                print("memeber = \(member.roadAddr)")
+            .subscribe(onNext: { [weak self] member in
+                self?.userInfo.address = member.roadAddr
             }).disposed(by: disposeBag)
     }
-    
     
     @objc private func searchAddress(_ sender: UIButton) {
         guard let address = inputUserAddressTextField.text else { return }
         viewModel.getAddress(address: address)
-        //        bindTableView()
-        //        print("asdf = \(listener?.addressData)")
         print(addressData)
     }
     
     @objc private func completeButtonDidTap(_ sender: UIButton) {
-        completeInsertData()
         viewModel.fetch()
     }
     
     override func configureVC() {
-        //        addressTableView.dataSource = self
         viewModel.delegate = self
         addressTableView.register(AddressTableViewCell.self, forCellReuseIdentifier: AddressTableViewCell.identifier)
         bindTableView()
@@ -118,14 +103,3 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel>, Address
         }
     }
 }
-
-//extension InputUserAddressViewController: UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return listener?.addressData.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: AddressTableViewCell.identifier, for: indexPath) as? AddressTableViewCell else { return UITableViewCell() }
-//        return cell
-//    }
-//}
