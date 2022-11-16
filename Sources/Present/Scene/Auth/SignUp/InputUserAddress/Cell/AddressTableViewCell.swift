@@ -21,6 +21,10 @@ class AddressTableViewCell: baseTableViewCell<AddressModel> {
         $0.font = .systemFont(ofSize: 13)
     }
     
+    func configure(with address: AddressModel) {
+        roadName.text = address.results.juso[0].roadAddr
+    }
+    
     override func addView() {
         print("hi")
         contentView.addSubViews(roadName, inputRoadName)

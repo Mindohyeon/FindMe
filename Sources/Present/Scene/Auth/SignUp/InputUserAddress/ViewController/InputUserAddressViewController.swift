@@ -7,11 +7,17 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
+class InputUserAddressViewController: BaseVC<InputUserAddressViewModel>, AddressPresentable {
+    var addressData = PublishSubject<[AddressModel]>()
+    
     private let addressTableView = UITableView()
     
-    private let dataSource = [AddressModel]()
+//    private let dataSource = [AddressModel]()
+    
+    private let disposeBag = DisposeBag()
     
     private let descriptionPageLabel = UILabel().then {
         $0.text = "분실물 배송을 위해 주소를 입력해주세요."
@@ -44,9 +50,33 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
         userInfo.address = address
     }
     
+    private func bindTableView() {
+        addressData
+            .bind(to: addressTableView.rx.items(cellIdentifier: AddressTableViewCell.identifier, cellType: AddressTableViewCell.self)) { (row, address, cell) in
+                print("address = \(address)")
+                cell.configure(with: address)
+
+            }
+            .disposed(by: disposeBag)
+        
+        addressData.subscribe { data in
+            print("data111 \(data)")
+        } onError: { error in
+            print("Error = \(error)")
+        } onCompleted: {
+            print("complete")
+        } onDisposed: {
+            print("disposed")
+        }
+        .disposed(by: disposeBag)
+    }
+    
     @objc private func searchAddress(_ sender: UIButton) {
         guard let address = inputUserAddressTextField.text else { return }
         viewModel.getAddress(address: address)
+//        bindTableView()
+//        print("asdf = \(listener?.addressData)")
+        print(addressData)
     }
     
     @objc private func completeButtonDidTap(_ sender: UIButton) {
@@ -55,8 +85,10 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
     }
     
     override func configureVC() {
-        addressTableView.dataSource = self
+//        addressTableView.dataSource = self
+        viewModel.delegate = self
         addressTableView.register(AddressTableViewCell.self, forCellReuseIdentifier: AddressTableViewCell.identifier)
+        bindTableView()
     }
     
     override func addView() {
@@ -93,13 +125,13 @@ class InputUserAddressViewController: BaseVC<InputUserAddressViewModel> {
     }
 }
 
-extension InputUserAddressViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AddressTableViewCell.identifier, for: indexPath) as? AddressTableViewCell else { return UITableViewCell() }
-        return cell
-    }
-}
+//extension InputUserAddressViewController: UITableViewDataSource {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return listener?.addressData.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        guard let cell = tableView.dequeueReusableCell(withIdentifier: AddressTableViewCell.identifier, for: indexPath) as? AddressTableViewCell else { return UITableViewCell() }
+//        return cell
+//    }
+//}

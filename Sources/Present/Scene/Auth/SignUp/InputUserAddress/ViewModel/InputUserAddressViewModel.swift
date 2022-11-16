@@ -9,13 +9,15 @@
 import Foundation
 import Alamofire
 import RxSwift
+import RxCocoa
 
 protocol AddressPresentable: AnyObject {
-    
+    var addressData: PublishSubject<[AddressModel]> { get }
 }
 
 class InputUserAddressViewModel: BaseViewModel {
     let userInfo = SignUpModel.share
+    var delegate: AddressPresentable?
     
     func popToRootVC() {
         coordinator.navigate(to: .popToRootViewIsRequired)
@@ -37,23 +39,19 @@ class InputUserAddressViewModel: BaseViewModel {
                    encoding: URLEncoding.queryString,
                    headers: ["Content-Type": "application/json", "Accept": "application/json"])
         .validate(statusCode: 200..<300)
-        .responseData { response in
-            do {
-                switch response.result {
-                case .success(_):
-                    print("jsonData = \(response.response?.statusCode)")
-                    
-                    let decodeResponse = try? JSONDecoder().decode(AddressModel.self, from: response.data!)
-                    
-                    
-                case .failure(let error):
-                    print("error!! = \(error)")
-                }
+        .responseDecodable(of: AddressModel.self) { [weak self] response in
+            switch response.result {
+            case .success(_):
+                //                print("jsonData = \(response.response?.statusCode)")
+                
+                let decodeResponse = try! JSONDecoder().decode(AddressModel.self, from: response.data!)
+                print(decodeResponse)
+                self?.delegate?.addressData.onNext([decodeResponse])
+                
+            case .failure(let error):
+                print("error!! = \(error)")
             }
-        }
-        //        .responseDecodable(of: AddressModel.self) { response in
-        //            print(response)
-        //        }
+        }.resume()
     }
     
     func fetch() {
