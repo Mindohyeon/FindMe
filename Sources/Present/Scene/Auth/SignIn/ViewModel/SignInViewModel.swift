@@ -38,6 +38,7 @@ class SignInViewModel: BaseViewModel {
         AF.request(request).responseString { response in
             //response.result == 토큰
             print(response.response?.statusCode)
+            print("token = \(response.result)")
             switch response.response?.statusCode {
             case 200:
                 print("성공")
