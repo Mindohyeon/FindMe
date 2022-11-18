@@ -25,7 +25,7 @@ class SignInViewModel: BaseViewModel {
     func fetch(id: String, password: String) {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
 //        request.addValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")
         
@@ -40,18 +40,7 @@ class SignInViewModel: BaseViewModel {
         AF.request(request).responseData { [weak self] response in
             //response.result == 토큰
             print(response.response?.statusCode)
-            print("token = \(response)")
-            
-            let decoder = JSONDecoder()
-            let token = try? decoder.decode(SignInModel.self, from: response.data!)
-            print("accessToken = \(token?.accessToken)")
-            
-            switch response.result {
-            case .success(let json):
-                print("accessToken = \(json)")
-            case .failure(_):
-                print("failure")
-            }
+            print("token = \(response.result)")
             
             print(response)
             
