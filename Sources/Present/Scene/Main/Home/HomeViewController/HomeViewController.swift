@@ -16,7 +16,8 @@ class HomeViewController: BaseVC<HomeViewModel> {
     
     private lazy var stackView = UIStackView(arrangedSubviews: [allButton, electronicsButton,preciousMetalsButton,
                                                                 clothingButton, householdGoodsButton, etcButton]).then {
-        $0.alignment = .fill
+        $0.distribution = .fillProportionally
+        $0.alignment = .center
         $0.axis = .horizontal
     }
     
@@ -77,23 +78,23 @@ class HomeViewController: BaseVC<HomeViewModel> {
         }
         
         electronicsButton.snp.makeConstraints {
-            $0.leading.equalTo(allButton.snp.trailing).offset(3)
+            $0.leading.equalTo(allButton.snp.trailing)
         }
         
         preciousMetalsButton.snp.makeConstraints {
-            $0.leading.equalTo(electronicsButton.snp.trailing).offset(3)
+            $0.leading.equalTo(electronicsButton.snp.trailing)
         }
         
         clothingButton.snp.makeConstraints {
-            $0.leading.equalTo(preciousMetalsButton.snp.trailing).offset(3)
+            $0.leading.equalTo(preciousMetalsButton.snp.trailing)
         }
         
         householdGoodsButton.snp.makeConstraints {
-            $0.leading.equalTo(clothingButton.snp.trailing).offset(3)
+            $0.leading.equalTo(clothingButton.snp.trailing)
         }
         
         etcButton.snp.makeConstraints {
-            $0.leading.equalTo(householdGoodsButton.snp.trailing)
+            $0.trailing.equalToSuperview().inset(5)
         }
     }
 }
