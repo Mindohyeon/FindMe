@@ -23,36 +23,41 @@ class HomeViewController: BaseVC<HomeViewModel> {
     
     private lazy var allButton = UIButton().then {
         $0.setTitle("전체", for: .normal)
+        $0.setTitleColor(.gray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
     private lazy var electronicsButton = UIButton().then {
         $0.setTitle("전자기기", for: .normal)
+        $0.setTitleColor(.gray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
     private lazy var preciousMetalsButton = UIButton().then {
         $0.setTitle("귀금속", for: .normal)
+        $0.setTitleColor(.gray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
     private lazy var clothingButton = UIButton().then {
         $0.setTitle("의류", for: .normal)
+        $0.setTitleColor(.gray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
     private lazy var householdGoodsButton = UIButton().then {
         $0.setTitle("생활 용품", for: .normal)
+        $0.setTitleColor(.gray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
     private lazy var etcButton = UIButton().then {
         $0.setTitle("기타", for: .normal)
+        $0.setTitleColor(.gray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
     override func configureVC() {
-        view.backgroundColor = .red
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "찾고있는 물건들"
     }
@@ -69,7 +74,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
         
         stackView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(5)
             $0.height.equalTo(50)
         }
         
