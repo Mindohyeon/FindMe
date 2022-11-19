@@ -11,6 +11,8 @@ import SnapKit
 import Then
 
 class ItemsCollectionViewCell: UICollectionViewCell {
+    static let identifier = "ItemsCollectionViewCell"
+    
     private let itemsImage = UIImageView().then {
         $0.backgroundColor = .gray
     }

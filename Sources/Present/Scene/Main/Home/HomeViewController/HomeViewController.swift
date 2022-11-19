@@ -62,6 +62,8 @@ class HomeViewController: BaseVC<HomeViewModel> {
     override func configureVC() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "찾고있는 물건들"
+        
+        ItemscollectionView.register(ItemsCollectionViewCell.self, forCellWithReuseIdentifier: ItemsCollectionViewCell.identifier)
     }
     
     override func addView() {
@@ -104,4 +106,17 @@ class HomeViewController: BaseVC<HomeViewModel> {
             $0.trailing.equalToSuperview().inset(5)
         }
     }
+}
+
+
+extension HomeViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 7
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ItemsCollectionViewCell.identifier, for: indexPath) else { return UICollectionViewCell() }
+    }
+    
+    
 }
