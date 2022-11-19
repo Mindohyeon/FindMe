@@ -28,15 +28,6 @@
       }
     },
     {
-      "identity" : "tabman",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/uias/Tabman",
-      "state" : {
-        "revision" : "6a87a2825939f5da06cf52a6582d67a646488cff",
-        "version" : "3.0.1"
-      }
-    },
-    {
       "identity" : "then",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/devxoul/Then",

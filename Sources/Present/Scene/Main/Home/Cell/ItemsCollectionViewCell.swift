@@ -18,13 +18,27 @@ class ItemsCollectionViewCell: UICollectionViewCell {
     }
     
     private let itemsTitle = UILabel().then {
+        $0.text = "Title"
         $0.font = .boldSystemFont(ofSize: 13)
     }
     
     private let itemsLocation = UILabel().then {
+        $0.text = "Location Information"
         $0.font = .systemFont(ofSize: 11)
         $0.numberOfLines = 0
     }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        addView()
+        setLayout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     private func addView() {
         contentView.addSubViews(itemsImage, itemsTitle, itemsLocation)

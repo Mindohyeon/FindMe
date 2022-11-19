@@ -21,7 +21,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
         $0.axis = .horizontal
     }
     
-    private let ItemscollectionView = UICollectionView()
+    private let ItemsCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     
     private lazy var allButton = UIButton().then {
         $0.setTitle("전체", for: .normal)
@@ -63,11 +63,13 @@ class HomeViewController: BaseVC<HomeViewModel> {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "찾고있는 물건들"
         
-        ItemscollectionView.register(ItemsCollectionViewCell.self, forCellWithReuseIdentifier: ItemsCollectionViewCell.identifier)
+        ItemsCollectionView.register(ItemsCollectionViewCell.self, forCellWithReuseIdentifier: ItemsCollectionViewCell.identifier)
+        ItemsCollectionView.dataSource = self
+        ItemsCollectionView.delegate = self
     }
     
     override func addView() {
-        view.addSubViews(stackView, profileButton)
+        view.addSubViews(stackView, profileButton, ItemsCollectionView)
     }
     
     override func setLayout() {
@@ -80,6 +82,12 @@ class HomeViewController: BaseVC<HomeViewModel> {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(5)
             $0.height.equalTo(50)
+        }
+        
+        ItemsCollectionView.snp.makeConstraints {
+            $0.top.equalTo(stackView.snp.bottom).offset(52)
+            $0.leading.trailing.equalToSuperview().inset(12)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         allButton.snp.makeConstraints {
@@ -115,8 +123,24 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ItemsCollectionViewCell.identifier, for: indexPath) else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ItemsCollectionViewCell.identifier, for: indexPath) as? ItemsCollectionViewCell else { return UICollectionViewCell() }
+        
+        return cell
+    }
+}
+
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 12
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.frame.width / 2 - 10
+        
+        return CGSize(width: width, height: 250)
+    }
 }
