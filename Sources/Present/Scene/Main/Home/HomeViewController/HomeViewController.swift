@@ -21,6 +21,8 @@ class HomeViewController: BaseVC<HomeViewModel> {
         $0.axis = .horizontal
     }
     
+    private let ItemscollectionView = UICollectionView()
+    
     private lazy var allButton = UIButton().then {
         $0.setTitle("전체", for: .normal)
         $0.setTitleColor(.gray, for: .normal)
