@@ -45,8 +45,17 @@ class InputUserIdViewController: BaseVC<InputUserIdViewModel> {
     }
     
     @objc private func nextButtonDidTap(_ sender: UIButton) {
-        insertUserIdData()
-        viewModel.pushInputUserNameVC()
+//        guard let id = inputIdTextField.text else { return inputIdTextField.shake() }
+        if inputIdTextField.text?.count ?? 0 <= 1 { return inputIdTextField.shake() }
+        if inputPasswordTextField.text?.count ?? 0 <= 1 { return inputPasswordTextField.shake() }
+        if inputCheckPasswordTextField.text?.count ?? 0 <= 1 { return inputCheckPasswordTextField.shake() }
+        guard let password = inputPasswordTextField.text else { return }
+        guard let checkPassword = inputCheckPasswordTextField.text else { return }
+        
+        if password.elementsEqual(checkPassword) {
+            insertUserIdData()
+            viewModel.pushInputUserNameVC()
+        }
     }
     
     override func addView() {

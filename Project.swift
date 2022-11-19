@@ -10,7 +10,8 @@ let project = Project(
         .SnapKit,
         .Then,
         .Alamofire,
-        .Tabman
+        .RxSwift,
+        .RxCocoa
     ],
     targets: [
         Target(
@@ -26,7 +27,8 @@ let project = Project(
                 .SPM.SnapKit,
                 .SPM.Then,
                 .SPM.Alamofire,
-                .SPM.Tabman
+                .SPM.RxSwift,
+                .SPM.RxCocoa
             ]
         )
     ]
