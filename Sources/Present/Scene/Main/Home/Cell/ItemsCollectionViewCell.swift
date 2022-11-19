@@ -14,6 +14,7 @@ class ItemsCollectionViewCell: UICollectionViewCell {
     static let identifier = "ItemsCollectionViewCell"
     
     private let itemsImage = UIImageView().then {
+        $0.layer.cornerRadius = 4
         $0.backgroundColor = .gray
     }
     
