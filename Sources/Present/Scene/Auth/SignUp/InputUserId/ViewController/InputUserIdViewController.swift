@@ -45,7 +45,6 @@ class InputUserIdViewController: BaseVC<InputUserIdViewModel> {
     }
     
     @objc private func nextButtonDidTap(_ sender: UIButton) {
-//        guard let id = inputIdTextField.text else { return inputIdTextField.shake() }
         if inputIdTextField.text?.count ?? 0 <= 1 { return inputIdTextField.shake() }
         if inputPasswordTextField.text?.count ?? 0 <= 1 { return inputPasswordTextField.shake() }
         if inputCheckPasswordTextField.text?.count ?? 0 <= 1 { return inputCheckPasswordTextField.shake() }
