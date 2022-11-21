@@ -10,11 +10,9 @@ import Foundation
 import Alamofire
 
 class HomeViewModel: BaseViewModel {
-    func fetch() {
-        print("fetch")
+    func findAllItems() {
         let url = APIConstants.findAllPost
-        
-        let headers: HTTPHeaders = ["Content-Type": "application/json", "Accept": "application/json"]
+        let headers: HTTPHeaders = ["Content-Type": "application/json", "Accept": "application/json", "Authorization": UserManager.shared.accessToken!]
         AF.request(url,
                    method: .get,
                    encoding: URLEncoding.queryString,

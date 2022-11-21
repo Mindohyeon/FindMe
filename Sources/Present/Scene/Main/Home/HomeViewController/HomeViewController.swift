@@ -14,8 +14,11 @@ class HomeViewController: BaseVC<HomeViewModel> {
         $0.setImage(UIImage(named: FindMeAsset.Images.profileIcon.name)?.resize(newWidth: 35), for: .normal)
     }
     
+    let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(stackViewButtonDidTap(_:)))
+    
     private lazy var stackView = UIStackView(arrangedSubviews: [allButton, electronicsButton,preciousMetalsButton,
                                                                 clothingButton, householdGoodsButton, etcButton]).then {
+        $0.addGestureRecognizer(tapGesture)
         $0.distribution = .fillProportionally
         $0.alignment = .center
         $0.axis = .horizontal
@@ -24,39 +27,54 @@ class HomeViewController: BaseVC<HomeViewModel> {
     private let ItemsCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     
     private lazy var allButton = UIButton().then {
+        $0.tag = 0
         $0.setTitle("전체", for: .normal)
         $0.setTitleColor(.gray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
     private lazy var electronicsButton = UIButton().then {
+        $0.tag = 1
         $0.setTitle("전자기기", for: .normal)
         $0.setTitleColor(.gray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
     private lazy var preciousMetalsButton = UIButton().then {
+        $0.tag = 2
         $0.setTitle("귀금속", for: .normal)
         $0.setTitleColor(.gray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
     private lazy var clothingButton = UIButton().then {
+        $0.tag = 3
         $0.setTitle("의류", for: .normal)
         $0.setTitleColor(.gray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
     private lazy var householdGoodsButton = UIButton().then {
+        $0.tag = 4
         $0.setTitle("생활 용품", for: .normal)
         $0.setTitleColor(.gray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
     private lazy var etcButton = UIButton().then {
+        $0.tag = 5
         $0.setTitle("기타", for: .normal)
         $0.setTitleColor(.gray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
+    }
+    
+    private lazy var floatingButton = UIButton().then {
+        $0.layer.cornerRadius = 0.5 * $0.bounds.size.width
+        $0.frame = CGRect(origin: .zero, size: CGSize(width: 40, height: 40))
+    }
+    
+    @objc private func stackViewButtonDidTap(_ sendeer: UIButton) {
+        print(sendeer.tag)
     }
     
     override func configureVC() {
@@ -67,11 +85,11 @@ class HomeViewController: BaseVC<HomeViewModel> {
         ItemsCollectionView.dataSource = self
         ItemsCollectionView.delegate = self
         
-        viewModel.fetch()
+        viewModel.findAllItems()
     }
     
     override func addView() {
-        view.addSubViews(stackView, profileButton, ItemsCollectionView)
+        view.addSubViews(stackView, profileButton, ItemsCollectionView, floatingButton)
     }
     
     override func setLayout() {
@@ -115,9 +133,13 @@ class HomeViewController: BaseVC<HomeViewModel> {
         etcButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(5)
         }
+        
+        floatingButton.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(68)
+            $0.trailing.equalToSuperview().offset(13)
+        }
     }
 }
-
 
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
