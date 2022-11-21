@@ -9,7 +9,7 @@
 import Foundation
 
 struct HomeModel: Codable {
-    var id: String?
+    var id: Int?
     var title: String?
     var description: String?
     var place: String?
