@@ -66,6 +66,8 @@ class HomeViewController: BaseVC<HomeViewModel> {
         ItemsCollectionView.register(ItemsCollectionViewCell.self, forCellWithReuseIdentifier: ItemsCollectionViewCell.identifier)
         ItemsCollectionView.dataSource = self
         ItemsCollectionView.delegate = self
+        
+        viewModel.fetch()
     }
     
     override func addView() {
