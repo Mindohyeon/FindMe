@@ -13,17 +13,19 @@ class HomeViewModel: BaseViewModel {
     func findAllItems() {
         let url = APIConstants.findAllPost
         let headers: HTTPHeaders = ["Content-Type": "application/json", "Accept": "application/json", "Authorization": UserManager.shared.accessToken!]
+        print("accessToken121 = \(UserManager.shared.accessToken!)")
         AF.request(url,
                    method: .get,
                    encoding: URLEncoding.queryString,
                    headers: headers)
-        .validate(statusCode: 200..<300)
-        .responseDecodable(of: HomeModel.self) { response in
+        .responseDecodable(of: [HomeModel].self) { response in
+            print("status = \(response.response?.statusCode)")
             switch response.result {
             case .success:
                 print("success")
-            case .failure:
-                print("failure")
+                print("response = \(response)")
+            case .failure(let error):
+                print("failure = \(error)")
             }
         }
     }

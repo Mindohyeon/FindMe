@@ -69,8 +69,12 @@ class HomeViewController: BaseVC<HomeViewModel> {
     }
     
     private lazy var floatingButton = UIButton().then {
+        $0.layer.cornerRadius = 20
+        $0.layer.cornerCurve = .circular
+        $0.backgroundColor = FindMeAsset.Colors.findmeMainColor.color
+        $0.setTitle("+", for: .normal)
         $0.layer.cornerRadius = 0.5 * $0.bounds.size.width
-        $0.frame = CGRect(origin: .zero, size: CGSize(width: 40, height: 40))
+//        $0.frame = CGRect(origin: .zero, size: CGSize(width: 50, height: 50))
     }
     
     @objc private func stackViewButtonDidTap(_ sendeer: UIButton) {
@@ -84,7 +88,9 @@ class HomeViewController: BaseVC<HomeViewModel> {
         ItemsCollectionView.register(ItemsCollectionViewCell.self, forCellWithReuseIdentifier: ItemsCollectionViewCell.identifier)
         ItemsCollectionView.dataSource = self
         ItemsCollectionView.delegate = self
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         viewModel.findAllItems()
     }
     
@@ -135,8 +141,9 @@ class HomeViewController: BaseVC<HomeViewModel> {
         }
         
         floatingButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(68)
-            $0.trailing.equalToSuperview().offset(13)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-60)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.size.equalTo(40)
         }
     }
 }

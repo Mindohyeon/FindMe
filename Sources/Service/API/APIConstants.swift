@@ -21,5 +21,5 @@ class APIConstants {
     static let getAddress = "https://business.juso.go.kr/addrlink/addrLinkApi.do"
     
     //lost
-    static let findAllPost = url + "/findAll"
+    static let findAllPost = url + "/lost/findAll"
 }
