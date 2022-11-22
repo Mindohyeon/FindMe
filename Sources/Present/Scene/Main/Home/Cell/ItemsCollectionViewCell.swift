@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import Then
+import Kingfisher
 
 class ItemsCollectionViewCell: UICollectionViewCell {
     static let identifier = "ItemsCollectionViewCell"
@@ -40,7 +41,6 @@ class ItemsCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     private func addView() {
         contentView.addSubViews(itemsImage, itemsTitle, itemsLocation)
     }
@@ -64,6 +64,9 @@ class ItemsCollectionViewCell: UICollectionViewCell {
     }
     
     func addFindAllData(with data: HomeModel) {
+        if let imageUrl = URL(string: data.lostImages[0]) {
+            itemsImage.kf.setImage(with: imageUrl)
+        }
         itemsTitle.text = data.title
         itemsLocation.text = data.place
     }
