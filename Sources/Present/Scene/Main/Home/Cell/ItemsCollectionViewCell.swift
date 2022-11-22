@@ -64,10 +64,12 @@ class ItemsCollectionViewCell: UICollectionViewCell {
     }
     
     func addFindAllData(with data: HomeModel) {
-        if let imageUrl = URL(string: data.lostImages[0]) {
-            itemsImage.kf.setImage(with: imageUrl)
+        DispatchQueue.main.async {
+            if let imageUrl = URL(string: data.lostImages[0]) {
+                self.itemsImage.kf.setImage(with: imageUrl)
+            }
+            self.itemsTitle.text = data.title
+            self.itemsLocation.text = data.place
         }
-        itemsTitle.text = data.title
-        itemsLocation.text = data.place
     }
 }
