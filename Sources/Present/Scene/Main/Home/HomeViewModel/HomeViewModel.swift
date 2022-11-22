@@ -35,7 +35,7 @@ class HomeViewModel: BaseViewModel {
             
             let decodeResponse = try? JSONDecoder().decode([HomeModel].self, from: response.data!)
             self?.delegate?.findAllData.onNext(decodeResponse ?? .init())
-            print("delegate decoderesponse = \(decodeResponse)")
+            print("delegate decoderesponse = \(String(describing: decodeResponse))")
             print("decodeResponse = \(String(describing: decodeResponse))")
             
             switch response.result {
