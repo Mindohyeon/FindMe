@@ -15,6 +15,10 @@ protocol findAllPresentable: AnyObject {
 }
 
 class HomeViewModel: BaseViewModel {
+    
+//    static func predeict(request: MyRequestInterceptor, completion: @escaping (_ succeed: UserManager?, _ failed: Error?) -> Void) {
+//
+//    }
     weak var delegate: findAllPresentable?
     
     func findAllItems() {
@@ -26,15 +30,17 @@ class HomeViewModel: BaseViewModel {
                    encoding: URLEncoding.queryString,
                    headers: headers)
         .responseJSON { [weak self] response in
-            print("status = \(response.response?.statusCode)")
+            print("status = \(String(describing: response.response?.statusCode))")
+            print("string = \(String(describing: String(data: response.data!, encoding: .utf8))))")
             
-            let decodeResponse = try! JSONDecoder().decode([HomeModel].self, from: response.data!)
-            self?.delegate?.findAllData.onNext(decodeResponse)
+            let decodeResponse = try? JSONDecoder().decode([HomeModel].self, from: response.data!)
+            self?.delegate?.findAllData.onNext(decodeResponse ?? .init())
+            print("delegate decoderesponse = \(decodeResponse)")
+            print("decodeResponse = \(String(describing: decodeResponse))")
             
             switch response.result {
             case .success:
                 print("success")
-                print("response = \(response)")
             case .failure(let error):
                 print("failure = \(error)")
             }

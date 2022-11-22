@@ -74,11 +74,11 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
     }
     
     private lazy var floatingButton = UIButton().then {
+        $0.titleLabel?.contentMode = .center
         $0.layer.cornerCurve = .circular
         $0.backgroundColor = FindMeAsset.Colors.findmeMainColor.color
         $0.setTitle("+", for: .normal)
         $0.layer.cornerRadius = 20
-//        $0.layer.cornerRadius = 0.5 * $0.bounds.size.width
     }
     
     private func bindCollectionview() {
@@ -95,14 +95,14 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "찾고있는 물건들"
         
-        itemsCollectionView.register(ItemsCollectionViewCell.self, forCellWithReuseIdentifier: ItemsCollectionViewCell.identifier)
-        itemsCollectionView.delegate = self
         viewModel.delegate = self
+        itemsCollectionView.delegate = self
+        itemsCollectionView.register(ItemsCollectionViewCell.self, forCellWithReuseIdentifier: ItemsCollectionViewCell.identifier)
+        bindCollectionview()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.findAllItems()
-        bindCollectionview()
     }
     
     override func addView() {

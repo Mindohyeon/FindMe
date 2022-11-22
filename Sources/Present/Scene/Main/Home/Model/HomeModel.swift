@@ -9,17 +9,14 @@
 import Foundation
 
 struct HomeModel: Codable {
-    var id: Int?
-    var title: String?
-    var description: String?
-    var place: String?
-    var lostImages: [LostImages]?
-    var category: String?
-    var tags: [String]?
-    var safeTransaction: Bool?
-}
-
-struct LostImages: Codable {
-    var imageId: Int?
-    var imageUrl: String?
+    var id: Int
+    var title: String
+    var description: String
+    var lostImages: [String]
+    var category: String
+    var tags: [String]
+    var isSafe: Bool
+    var place: String
+    var latitude: String
+    var longitude: String
 }

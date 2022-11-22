@@ -64,7 +64,7 @@ class ItemsCollectionViewCell: UICollectionViewCell {
     }
     
     func addFindAllData(with data: HomeModel) {
-        itemsImage.image = UIImage(named: data.lostImages?[0].imageUrl ?? "")
+//        itemsImage.image = UIImage(named: data.lostImages?[0].imageUrl ?? "")
         itemsTitle.text = data.title
         itemsLocation.text = data.place
     }
