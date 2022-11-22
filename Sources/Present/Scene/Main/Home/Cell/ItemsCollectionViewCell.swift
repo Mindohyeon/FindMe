@@ -62,4 +62,10 @@ class ItemsCollectionViewCell: UICollectionViewCell {
             $0.leading.equalToSuperview()
         }
     }
+    
+    func addFindAllData(with data: HomeModel) {
+        itemsImage.image = UIImage(named: data.lostImages?[0].imageUrl ?? "")
+        itemsTitle.text = data.title
+        itemsLocation.text = data.place
+    }
 }

@@ -8,8 +8,15 @@
 
 import Foundation
 import Alamofire
+import RxSwift
+
+protocol findAllPresentable: AnyObject {
+    var findAllData: PublishSubject<[HomeModel]> { get }
+}
 
 class HomeViewModel: BaseViewModel {
+    weak var delegate: findAllPresentable?
+    
     func findAllItems() {
         let url = APIConstants.findAllPost
         let headers: HTTPHeaders = ["Content-Type": "application/json", "Accept": "application/json", "Authorization": UserManager.shared.accessToken!]
@@ -18,8 +25,12 @@ class HomeViewModel: BaseViewModel {
                    method: .get,
                    encoding: URLEncoding.queryString,
                    headers: headers)
-        .responseDecodable(of: [HomeModel].self) { response in
+        .responseJSON { [weak self] response in
             print("status = \(response.response?.statusCode)")
+            
+            let decodeResponse = try! JSONDecoder().decode([HomeModel].self, from: response.data!)
+            self?.delegate?.findAllData.onNext(decodeResponse)
+            
             switch response.result {
             case .success:
                 print("success")

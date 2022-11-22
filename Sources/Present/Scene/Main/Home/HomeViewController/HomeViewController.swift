@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
-class HomeViewController: BaseVC<HomeViewModel> {
+class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
+    var findAllData = PublishSubject<[HomeModel]>()
+    
+    private let disposeBag = DisposeBag()
     
     private let profileButton = UIButton().then {
         $0.setImage(UIImage(named: FindMeAsset.Images.profileIcon.name)?.resize(newWidth: 35), for: .normal)
@@ -24,7 +29,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
         $0.axis = .horizontal
     }
     
-    private let ItemsCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let itemsCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     
     private lazy var allButton = UIButton().then {
         $0.tag = 0
@@ -69,12 +74,17 @@ class HomeViewController: BaseVC<HomeViewModel> {
     }
     
     private lazy var floatingButton = UIButton().then {
-        $0.layer.cornerRadius = 20
         $0.layer.cornerCurve = .circular
         $0.backgroundColor = FindMeAsset.Colors.findmeMainColor.color
         $0.setTitle("+", for: .normal)
-        $0.layer.cornerRadius = 0.5 * $0.bounds.size.width
-//        $0.frame = CGRect(origin: .zero, size: CGSize(width: 50, height: 50))
+        $0.layer.cornerRadius = 20
+//        $0.layer.cornerRadius = 0.5 * $0.bounds.size.width
+    }
+    
+    private func bindCollectionview() {
+        findAllData.bind(to: itemsCollectionView.rx.items(cellIdentifier: ItemsCollectionViewCell.identifier, cellType: ItemsCollectionViewCell.self)) { (row, data, cell) in
+            cell.addFindAllData(with: data)
+        }.disposed(by: disposeBag)
     }
     
     @objc private func stackViewButtonDidTap(_ sendeer: UIButton) {
@@ -85,17 +95,18 @@ class HomeViewController: BaseVC<HomeViewModel> {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "찾고있는 물건들"
         
-        ItemsCollectionView.register(ItemsCollectionViewCell.self, forCellWithReuseIdentifier: ItemsCollectionViewCell.identifier)
-        ItemsCollectionView.dataSource = self
-        ItemsCollectionView.delegate = self
+        itemsCollectionView.register(ItemsCollectionViewCell.self, forCellWithReuseIdentifier: ItemsCollectionViewCell.identifier)
+        itemsCollectionView.delegate = self
+        viewModel.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.findAllItems()
+        bindCollectionview()
     }
     
     override func addView() {
-        view.addSubViews(stackView, profileButton, ItemsCollectionView, floatingButton)
+        view.addSubViews(stackView, profileButton, itemsCollectionView, floatingButton)
     }
     
     override func setLayout() {
@@ -110,8 +121,8 @@ class HomeViewController: BaseVC<HomeViewModel> {
             $0.height.equalTo(50)
         }
         
-        ItemsCollectionView.snp.makeConstraints {
-            $0.top.equalTo(stackView.snp.bottom).offset(52)
+        itemsCollectionView.snp.makeConstraints {
+            $0.top.equalTo(stackView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(12)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
@@ -148,17 +159,17 @@ class HomeViewController: BaseVC<HomeViewModel> {
     }
 }
 
-extension HomeViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ItemsCollectionViewCell.identifier, for: indexPath) as? ItemsCollectionViewCell else { return UICollectionViewCell() }
-        
-        return cell
-    }
-}
+//extension HomeViewController: UICollectionViewDataSource {
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return 7
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ItemsCollectionViewCell.identifier, for: indexPath) as? ItemsCollectionViewCell else { return UICollectionViewCell() }
+//
+//        return cell
+//    }
+//}
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
