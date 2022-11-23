@@ -43,6 +43,7 @@ class SignInViewModel: BaseViewModel {
             switch response.response?.statusCode {
             case 200:
                 print("성공")
+                print("token = \(response.result)")
                 if let refreshToken = (try? JSONSerialization.jsonObject(with: response.data!, options: []) as? [String: Any])? ["refreshToken"] as? String {
                     print("refreshtoken = \(refreshToken)")
                     UserDefaults.standard.set(refreshToken, forKey: "UserToken")
