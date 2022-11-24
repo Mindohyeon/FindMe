@@ -17,24 +17,24 @@ protocol findAllPresentable: AnyObject {
 class HomeViewModel: BaseViewModel {
     weak var delegate: findAllPresentable?
     
-//    func findAllItems() {
-//        let url = APIConstants.findAllPost
-//        let headers: HTTPHeaders = ["Content-Type": "application/json", "Accept": "application/json", "Authorization": UserManager.shared.accessToken!]
-//        print("accessToken121 = \(UserManager.shared.accessToken!)")
-//        AF.request(url,
-//                   method: .get,
-//                   encoding: URLEncoding.queryString,
-//                   headers: headers)
-//        .responseJSON { [weak self] response in
-//            let decodeResponse = try? JSONDecoder().decode([HomeModel].self, from: response.data!)
-//            self?.delegate?.findAllData.onNext(decodeResponse ?? .init())
-//            
-//            switch response.result {
-//            case .success:
-//                print("success")
-//            case .failure(let error):
-//                print("failure = \(error)")
-//            }
-//        }
-//    }
+    func findAllItems() {
+        let url = APIConstants.findAllPost
+        let headers: HTTPHeaders = ["Content-Type": "application/json", "Accept": "application/json", "Authorization": UserManager.shared.accessToken!]
+        print("accessToken121 = \(UserManager.shared.accessToken!)")
+        AF.request(url,
+                   method: .get,
+                   encoding: URLEncoding.queryString,
+                   headers: headers)
+        .responseJSON { [weak self] response in
+            let decodeResponse = try? JSONDecoder().decode([HomeModel].self, from: response.data!)
+            self?.delegate?.findAllData.onNext(decodeResponse ?? .init())
+            print(decodeResponse)
+            switch response.result {
+            case .success:
+                print("success")
+            case .failure(let error):
+                print("failure = \(error)")
+            }
+        }
+    }
 }

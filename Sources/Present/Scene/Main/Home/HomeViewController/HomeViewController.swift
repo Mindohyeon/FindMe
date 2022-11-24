@@ -91,28 +91,29 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
     
     @objc private func allButtonDidTap(_ sender: UIButton) {
         print(stackView.tag)
-        allButton.setTitleColor(.black, for: .normal)
+        print(stackView.arrangedSubviews[0].tag)
+
     }
     
     @objc private func electronicsButtonDidTap(_ sender: UIButton) {
-        electronicsButton.setTitleColor(.black, for: .normal)
+        
     }
     
     @objc private func preciousMetalsButtonDidTap(_ sender: UIButton) {
         print(stackView.tag)
-        preciousMetalsButton.setTitleColor(.black, for: .normal)
+        
     }
     
     @objc private func clothingButtonDidTap(_ sender: UIButton) {
-        clothingButton.setTitleColor(.black, for: .normal)
+        
     }
     
     @objc private func householdGoodsButtonDidTap(_ sender: UIButton) {
-        householdGoodsButton.setTitleColor(.black, for: .normal)
+        
     }
     
     @objc private func etcButtonDidTap(_ sender: UIButton) {
-        etcButton.setTitleColor(.black, for: .normal)
+
     }
     
     @objc private func floatingButtonDidTap(_ sender: UIButton) {
@@ -140,7 +141,7 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        viewModel.findAllItems()
+        viewModel.findAllItems()
     }
     
     override func addView() {
