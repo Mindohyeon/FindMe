@@ -16,7 +16,7 @@ class ItemsCollectionViewCell: UICollectionViewCell {
     
     private let itemsImage = UIImageView().then {
         $0.layer.cornerRadius = 4
-        $0.backgroundColor = .gray
+        $0.backgroundColor = FindMeAsset.Colors.grey.color
     }
     
     private let itemsTitle = UILabel().then {

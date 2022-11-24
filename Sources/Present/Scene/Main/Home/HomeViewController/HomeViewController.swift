@@ -34,7 +34,7 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         $0.tag = 0
         $0.addTarget(self, action: #selector(allButtonDidTap(_:)), for: .touchUpInside)
         $0.setTitle("전체", for: .normal)
-        $0.setTitleColor(.gray, for: .normal)
+        $0.setTitleColor(FindMeAsset.Colors.darkGrey.color, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
@@ -42,7 +42,7 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         $0.addTarget(self, action: #selector(electronicsButtonDidTap(_:)), for: .touchUpInside)
         $0.tag = 1
         $0.setTitle("전자기기", for: .normal)
-        $0.setTitleColor(.gray, for: .normal)
+        $0.setTitleColor(FindMeAsset.Colors.darkGrey.color, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
@@ -50,7 +50,7 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         $0.addTarget(self, action: #selector(preciousMetalsButtonDidTap(_:)), for: .touchUpInside)
         $0.tag = 2
         $0.setTitle("귀금속", for: .normal)
-        $0.setTitleColor(.gray, for: .normal)
+        $0.setTitleColor(FindMeAsset.Colors.darkGrey.color, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
@@ -58,7 +58,7 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         $0.addTarget(self, action: #selector(clothingButtonDidTap(_:)), for: .touchUpInside)
         $0.tag = 3
         $0.setTitle("의류", for: .normal)
-        $0.setTitleColor(.gray, for: .normal)
+        $0.setTitleColor(FindMeAsset.Colors.darkGrey.color, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
@@ -66,7 +66,7 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         $0.addTarget(self, action: #selector(householdGoodsButtonDidTap(_:)), for: .touchUpInside)
         $0.tag = 4
         $0.setTitle("생활 용품", for: .normal)
-        $0.setTitleColor(.gray, for: .normal)
+        $0.setTitleColor(FindMeAsset.Colors.darkGrey.color, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
@@ -74,7 +74,7 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         $0.addTarget(self, action: #selector(etcButtonDidTap(_:)), for: .touchUpInside)
         $0.tag = 5
         $0.setTitle("기타", for: .normal)
-        $0.setTitleColor(.gray, for: .normal)
+        $0.setTitleColor(FindMeAsset.Colors.darkGrey.color, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
     
