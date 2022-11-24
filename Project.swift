@@ -11,7 +11,8 @@ let project = Project(
         .Then,
         .Alamofire,
         .RxSwift,
-        .RxCocoa
+        .RxCocoa,
+        .Kingfisher
     ],
     targets: [
         Target(
@@ -28,7 +29,8 @@ let project = Project(
                 .SPM.Then,
                 .SPM.Alamofire,
                 .SPM.RxSwift,
-                .SPM.RxCocoa
+                .SPM.RxCocoa,
+                .SPM.Kingfisher
             ]
         )
     ]
