@@ -65,7 +65,7 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         }
         
         floatingButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-60)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-40)
             $0.trailing.equalToSuperview().offset(-20)
             $0.size.equalTo(40)
         }
