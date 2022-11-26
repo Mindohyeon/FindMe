@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class DetailPostViewController: BaseVC<DetailPostViewModel> {
     private let postImageView = UIImageView().then {
@@ -25,6 +26,17 @@ class DetailPostViewController: BaseVC<DetailPostViewModel> {
     private let postDescriptionLabel = UILabel().then {
         $0.text = "description"
         $0.textColor = FindMeAsset.Colors.postBodyTextColor.color
+    }
+    
+    func fetch(with model: HomeModel) {
+        DispatchQueue.main.async {
+            if let imageUrl = URL(string: model.imageUrl[0]) {
+                self.postImageView.kf.setImage(with: imageUrl)
+            }
+            self.postTitleLabel.text = model.title
+            self.postLocationLabel.text = model.place
+            self.postDescriptionLabel.text = model.description
+        }
     }
     
     override func addView() {

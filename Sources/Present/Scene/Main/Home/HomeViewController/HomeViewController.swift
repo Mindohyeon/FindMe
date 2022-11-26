@@ -33,6 +33,11 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         findAllData.bind(to: itemsCollectionView.rx.items(cellIdentifier: ItemsCollectionViewCell.identifier, cellType: ItemsCollectionViewCell.self)) { (row, data, cell) in
             cell.addFindAllData(with: data)
         }.disposed(by: disposeBag)
+        
+        itemsCollectionView.rx.modelSelected(HomeModel.self)
+            .subscribe { [weak self] member in
+                
+            }
     }
     
     override func configureVC() {
