@@ -12,7 +12,7 @@ struct HomeModel: Codable {
     var id: Int
     var title: String
     var description: String
-    var lostImages: [String]
+    var imageUrl: [String]
     var category: String
     var tags: [String]
     var isSafe: Bool
