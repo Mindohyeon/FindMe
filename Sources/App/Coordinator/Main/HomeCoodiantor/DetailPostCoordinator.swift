@@ -12,7 +12,7 @@ class DetailPostCoordinator: baseCoordinator {
     func startDetailPostVC(model: HomeModel) {
         let vm = DetailPostViewModel(coordinator: self)
         let vc = DetailPostViewController(viewModel: vm, model: model)
-        
+        vc.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(vc, animated: true)
     }
 }
