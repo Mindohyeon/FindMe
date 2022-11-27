@@ -35,9 +35,9 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         }.disposed(by: disposeBag)
         
         itemsCollectionView.rx.modelSelected(HomeModel.self)
-            .subscribe { [weak self] member in
-                
-            }
+            .subscribe(onNext: { [weak self] member in
+                self?.viewModel.pushDetailPostVC(model: member)
+            }).disposed(by: disposeBag)
     }
     
     override func configureVC() {
