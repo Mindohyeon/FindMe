@@ -23,10 +23,12 @@ class DetailPostViewController: BaseVC<DetailPostViewModel> {
     
     private let postLocationLabel = UILabel().then {
         $0.text = "location"
+        $0.font = .systemFont(ofSize: 14)
     }
     
     private let postDescriptionLabel = UILabel().then {
         $0.text = "description"
+        $0.font = .systemFont(ofSize: 14)
         $0.textColor = FindMeAsset.Colors.postBodyTextColor.color
     }
     
@@ -58,7 +60,7 @@ class DetailPostViewController: BaseVC<DetailPostViewModel> {
     }
     
     override func addView() {
-        view.addSubViews(postImageView, postTitleLabel, postLocationLabel)
+        view.addSubViews(postImageView, postTitleLabel, postLocationLabel, postDescriptionLabel)
     }
     
     override func setLayout() {
@@ -76,6 +78,11 @@ class DetailPostViewController: BaseVC<DetailPostViewModel> {
         postLocationLabel.snp.makeConstraints {
             $0.top.equalTo(postTitleLabel.snp.bottom).offset(4)
             $0.leading.equalTo(postTitleLabel.snp.leading).offset(2)
+        }
+        
+        postDescriptionLabel.snp.makeConstraints {
+            $0.top.equalTo(postLocationLabel.snp.bottom).offset(16)
+            $0.leading.equalTo(postLocationLabel.snp.leading)
         }
     }
 }
