@@ -10,10 +10,9 @@ import UIKit
 
 class TabBarCoordinator: baseCoordinator {
     var childCoordinator: [Coordinator] = []
+    let tabBarViewController = UITabBarController()
     
     override func start() {
-        let tabBarViewController = UITabBarController()
-        
         let firstItem = UITabBarItem(title: nil, image: UIImage(asset: FindMeAsset.Images.mapIcon), tag: 0)
         let secondItem = UITabBarItem(title: nil, image: UIImage(asset: FindMeAsset.Images.homeIcon), tag: 1)
         let thirdItem = UITabBarItem(title: nil, image: UIImage(asset: FindMeAsset.Images.chatIcon), tag: 2)
