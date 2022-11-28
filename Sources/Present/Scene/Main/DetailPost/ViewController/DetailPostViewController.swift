@@ -37,6 +37,11 @@ class DetailPostViewController: BaseVC<DetailPostViewModel> {
         $0.addTarget(self, action: #selector(findButtonDidTap(_:)), for: .touchUpInside)
     }
     
+    private let cagetoryStackView = UIStackView().then {
+        $0.alignment = .fill
+        $0.axis = .horizontal
+    }
+    
     init(viewModel: DetailPostViewModel, model: HomeModel) {
         super.init(viewModel: viewModel)
         self.model = model
@@ -47,7 +52,7 @@ class DetailPostViewController: BaseVC<DetailPostViewModel> {
     }
     
     @objc private func findButtonDidTap(_ sender: UIButton) {
-        print("jj")
+        
     }
     
     func fetch(data model: HomeModel) {
@@ -96,7 +101,7 @@ class DetailPostViewController: BaseVC<DetailPostViewModel> {
         
         findButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(64)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(48)
         }
     }
