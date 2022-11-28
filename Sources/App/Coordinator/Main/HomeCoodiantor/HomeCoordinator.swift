@@ -15,4 +15,23 @@ class HomeCoordinator: baseCoordinator {
         
         navigationController.pushViewController(vc, animated: true)
     }
+    
+    override func navigate(to step: FMStep) {
+        switch step {
+        case .pushDetailPostIsRequired(let model):
+            pushDetailPostIsRequired(model: model)
+            
+        default:
+            return
+        }
+    }
+}
+
+extension HomeCoordinator {
+    func pushDetailPostIsRequired(model: HomeModel) {
+        let vc = DetailPostCoordinator(navigationController: navigationController)
+        vc.parentCoordinator = self
+        childCoordinators.append(vc)
+        vc.startDetailPostVC(model: model)
+    }
 }
