@@ -12,44 +12,16 @@ import RxSwift
 import RxCocoa
 
 class MapViewController: BaseVC<MapViewModel>, findAllItemsPresentable, MKMapViewDelegate, CLLocationManagerDelegate{
-    var findAllItemsData = PublishSubject<[HomeModel]>()
-    
+    var findAllItemsData = PublishSubject<[MapModel]>()
     let mapView = MKMapView()
     var locationManager = CLLocationManager()
-    
     let disposeBag = DisposeBag()
-    
-    func goSetting() {
-        
-        let alert = UIAlertController(title: "위치권한 요청", message: "러닝 거리 기록을 위해 항상 위치 권한이 필요합니다.", preferredStyle: .alert)
-        let settingAction = UIAlertAction(title: "설정", style: .default) { action in
-            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
-            // 열 수 있는 url 이라면, 이동
-            if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url)
-            }
-        }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { UIAlertAction in
-            
-        }
-        
-        alert.addAction(settingAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
-    }
     
     func checkCurrentLocationAuthorization(authorizationStatus: CLAuthorizationStatus) {
         switch authorizationStatus {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
-        case .restricted:
-            print("restricted")
-            goSetting()
-        case .denied:
-            print("denided")
-            goSetting()
         case .authorizedAlways:
             print("always")
         case .authorizedWhenInUse:
@@ -110,6 +82,12 @@ class MapViewController: BaseVC<MapViewModel>, findAllItemsPresentable, MKMapVie
     }
     
     override func configureVC() {
+        
+        viewModel.delegate = self
+        findAllItemsData.subscribe { response in
+            print("response = \(response)")
+        }.disposed(by: disposeBag)
+        
         locationManager.requestAlwaysAuthorization()
         checkUserLocationServicesAuthorization()
         
@@ -118,10 +96,16 @@ class MapViewController: BaseVC<MapViewModel>, findAllItemsPresentable, MKMapVie
         locationManager.startUpdatingLocation()
         mapView.showsUserLocation = true
         
-        viewModel.findAllItems()
-        findAllItemsData.subscribe(onNext: { ee in
-            print("ee = \(ee)")
+        findAllItemsData.subscribe(onNext: { [weak self] data in
+            for i in 0..<data.count {
+                self?.setAnnotation(latitudeValue: Double(data[i].latitude)!, longitudeValue: Double(data[i].latitude)!, delta: 0.1, title: data[i].title, subtitle: "sub")
+                print("lati = \(data[i].latitude)")
+            }
         }).disposed(by: disposeBag)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.findAllItems()
     }
     
     override func addView() {

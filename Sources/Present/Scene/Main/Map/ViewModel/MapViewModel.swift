@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 
 protocol findAllItemsPresentable: AnyObject {
-    var findAllItemsData: PublishSubject<[HomeModel]> { get }
+    var findAllItemsData: PublishSubject<[MapModel]> { get }
 }
 
 class MapViewModel: BaseViewModel {
@@ -26,8 +26,9 @@ class MapViewModel: BaseViewModel {
                    encoding: URLEncoding.queryString,
                    headers: headers)
         .responseJSON { [weak self] response in
-            let decodeResponse = try? JSONDecoder().decode([HomeModel].self, from: response.data!)
+            let decodeResponse = try? JSONDecoder().decode([MapModel].self, from: response.data!)
             self?.delegate?.findAllItemsData.onNext(decodeResponse ?? .init())
+            print("delegate = \(self?.delegate?.findAllItemsData)")
             
             switch response.result {
             case .success:
