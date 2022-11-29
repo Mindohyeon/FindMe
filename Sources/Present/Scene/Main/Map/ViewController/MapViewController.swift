@@ -97,8 +97,8 @@ class MapViewController: BaseVC<MapViewModel>, findAllItemsPresentable, MKMapVie
         mapView.showsUserLocation = true
         
         findAllItemsData.subscribe(onNext: { [weak self] data in
-            for i in 0..<data.count {
-                self?.setAnnotation(latitudeValue: Double(data[i].latitude)!, longitudeValue: Double(data[i].latitude)!, delta: 0.1, title: data[i].title, subtitle: "sub")
+            for i in 1..<data.count {
+                self?.setAnnotation(latitudeValue: Double(data[i].latitude)!, longitudeValue: Double(data[i].longitude)!, delta: 0.01, title: data[i].title, subtitle: "sub")
                 print("lati = \(data[i].latitude)")
             }
         }).disposed(by: disposeBag)
