@@ -27,6 +27,13 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         $0.backgroundColor = FindMeAsset.Colors.findmeMainColor.color
         $0.setTitle("+", for: .normal)
         $0.layer.cornerRadius = 20
+        $0.addTarget(self, action: #selector(floatingButtonDidTap(_:)), for: .touchUpInside)
+    }
+  
+    private lazy var addPostAlert = UIAlertController(title: "등록", message: "어떤걸 등록하시겠습니까?", preferredStyle: .alert)
+    
+    @objc private func floatingButtonDidTap(_ sender: UIButton) {
+        present(addPostAlert, animated: true)
     }
     
     private func bindCollectionview() {
@@ -48,6 +55,10 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         itemsCollectionView.delegate = self
         itemsCollectionView.register(ItemsCollectionViewCell.self, forCellWithReuseIdentifier: ItemsCollectionViewCell.identifier)
         bindCollectionview()
+        
+        addPostAlert.addAction(UIAlertAction(title: "습득물 등록", style: .default))
+        addPostAlert.addAction(UIAlertAction(title: "분실물 등록", style: .default))
+        addPostAlert.addAction(UIAlertAction(title: "취소", style: .default))
     }
     
     override func viewWillAppear(_ animated: Bool) {

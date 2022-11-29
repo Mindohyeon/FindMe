@@ -99,7 +99,6 @@ class MapViewController: BaseVC<MapViewModel>, findAllItemsPresentable, MKMapVie
         findAllItemsData.subscribe(onNext: { [weak self] data in
             for i in 1..<data.count {
                 self?.setAnnotation(latitudeValue: Double(data[i].latitude)!, longitudeValue: Double(data[i].longitude)!, delta: 0.01, title: data[i].title, subtitle: "sub")
-                print("lati = \(data[i].latitude)")
             }
         }).disposed(by: disposeBag)
     }
