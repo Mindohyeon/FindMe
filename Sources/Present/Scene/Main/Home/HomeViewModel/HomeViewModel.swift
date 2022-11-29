@@ -31,7 +31,7 @@ class HomeViewModel: BaseViewModel {
         .responseJSON { [weak self] response in
             let decodeResponse = try? JSONDecoder().decode([HomeModel].self, from: response.data!)
             self?.delegate?.findAllData.onNext(decodeResponse ?? .init())
-            
+            print(decodeResponse)
             switch response.result {
             case .success:
                 print("success")
