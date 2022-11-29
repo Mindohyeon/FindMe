@@ -17,10 +17,13 @@ protocol findAllPresentable: AnyObject {
 class HomeViewModel: BaseViewModel {
     weak var delegate: findAllPresentable?
     
+    func pushDetailPostVC(model: HomeModel) {
+        coordinator.navigate(to: .pushDetailPostIsRequired(model: model))
+    }
+    
     func findAllItems() {
         let url = APIConstants.findAllPost
         let headers: HTTPHeaders = ["Content-Type": "application/json", "Accept": "application/json", "Authorization": UserManager.shared.accessToken!]
-        print("accessToken121 = \(UserManager.shared.accessToken!)")
         AF.request(url,
                    method: .get,
                    encoding: URLEncoding.queryString,

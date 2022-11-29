@@ -8,4 +8,7 @@ enum FMStep {
     
     //SignIn
     case pushTabBarIsRequired
+    
+    //Home
+    case pushDetailPostIsRequired(model: HomeModel)
 }

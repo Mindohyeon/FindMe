@@ -18,65 +18,8 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
     private let profileButton = UIButton().then {
         $0.setImage(UIImage(named: FindMeAsset.Images.profileIcon.name)?.resize(newWidth: 35), for: .normal)
     }
-    
-    let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
-    
-    private lazy var stackView = UIStackView(arrangedSubviews: [allButton, electronicsButton,preciousMetalsButton,
-                                                                clothingButton, householdGoodsButton, etcButton]).then {
-        $0.distribution = .fillProportionally
-        $0.alignment = .center
-        $0.axis = .horizontal
-    }
-    
+
     private let itemsCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    
-    private lazy var allButton = UIButton().then {
-        $0.tag = 0
-        $0.addTarget(self, action: #selector(allButtonDidTap(_:)), for: .touchUpInside)
-        $0.setTitle("전체", for: .normal)
-        $0.setTitleColor(.gray, for: .normal)
-        $0.titleLabel?.font = .systemFont(ofSize: 14)
-    }
-    
-    private lazy var electronicsButton = UIButton().then {
-        $0.addTarget(self, action: #selector(electronicsButtonDidTap(_:)), for: .touchUpInside)
-        $0.tag = 1
-        $0.setTitle("전자기기", for: .normal)
-        $0.setTitleColor(.gray, for: .normal)
-        $0.titleLabel?.font = .systemFont(ofSize: 14)
-    }
-    
-    private lazy var preciousMetalsButton = UIButton().then {
-        $0.addTarget(self, action: #selector(preciousMetalsButtonDidTap(_:)), for: .touchUpInside)
-        $0.tag = 2
-        $0.setTitle("귀금속", for: .normal)
-        $0.setTitleColor(.gray, for: .normal)
-        $0.titleLabel?.font = .systemFont(ofSize: 14)
-    }
-    
-    private lazy var clothingButton = UIButton().then {
-        $0.addTarget(self, action: #selector(clothingButtonDidTap(_:)), for: .touchUpInside)
-        $0.tag = 3
-        $0.setTitle("의류", for: .normal)
-        $0.setTitleColor(.gray, for: .normal)
-        $0.titleLabel?.font = .systemFont(ofSize: 14)
-    }
-    
-    private lazy var householdGoodsButton = UIButton().then {
-        $0.addTarget(self, action: #selector(householdGoodsButtonDidTap(_:)), for: .touchUpInside)
-        $0.tag = 4
-        $0.setTitle("생활 용품", for: .normal)
-        $0.setTitleColor(.gray, for: .normal)
-        $0.titleLabel?.font = .systemFont(ofSize: 14)
-    }
-    
-    private lazy var etcButton = UIButton().then {
-        $0.addTarget(self, action: #selector(etcButtonDidTap(_:)), for: .touchUpInside)
-        $0.tag = 5
-        $0.setTitle("기타", for: .normal)
-        $0.setTitleColor(.gray, for: .normal)
-        $0.titleLabel?.font = .systemFont(ofSize: 14)
-    }
     
     private lazy var floatingButton = UIButton().then {
         $0.titleLabel?.contentMode = .center
@@ -86,35 +29,8 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         $0.layer.cornerRadius = 20
         $0.addTarget(self, action: #selector(floatingButtonDidTap(_:)), for: .touchUpInside)
     }
-    
+  
     private lazy var addPostAlert = UIAlertController(title: "등록", message: "어떤걸 등록하시겠습니까?", preferredStyle: .alert)
-    
-    @objc private func allButtonDidTap(_ sender: UIButton) {
-        print(stackView.tag)
-        print(stackView.arrangedSubviews[0].tag)
-
-    }
-    
-    @objc private func electronicsButtonDidTap(_ sender: UIButton) {
-        
-    }
-    
-    @objc private func preciousMetalsButtonDidTap(_ sender: UIButton) {
-        print(stackView.tag)
-        
-    }
-    
-    @objc private func clothingButtonDidTap(_ sender: UIButton) {
-        
-    }
-    
-    @objc private func householdGoodsButtonDidTap(_ sender: UIButton) {
-        
-    }
-    
-    @objc private func etcButtonDidTap(_ sender: UIButton) {
-
-    }
     
     @objc private func floatingButtonDidTap(_ sender: UIButton) {
         present(addPostAlert, animated: true)
@@ -124,11 +40,16 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
         findAllData.bind(to: itemsCollectionView.rx.items(cellIdentifier: ItemsCollectionViewCell.identifier, cellType: ItemsCollectionViewCell.self)) { (row, data, cell) in
             cell.addFindAllData(with: data)
         }.disposed(by: disposeBag)
+        
+        itemsCollectionView.rx.modelSelected(HomeModel.self)
+            .subscribe(onNext: { [weak self] member in
+                self?.viewModel.pushDetailPostVC(model: member)
+            }).disposed(by: disposeBag)
     }
     
     override func configureVC() {
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "찾고있는 물건들"
+        navigationItem.title = "전체보기"
         
         viewModel.delegate = self
         itemsCollectionView.delegate = self
@@ -145,7 +66,7 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
     }
     
     override func addView() {
-        view.addSubViews(stackView, profileButton, itemsCollectionView, floatingButton)
+        view.addSubViews(profileButton, itemsCollectionView, floatingButton)
     }
     
     override func setLayout() {
@@ -153,41 +74,10 @@ class HomeViewController: BaseVC<HomeViewModel>, findAllPresentable {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(-45)
             $0.trailing.equalToSuperview().inset(15)
         }
-        
-        stackView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(5)
-            $0.height.equalTo(50)
-        }
-        
         itemsCollectionView.snp.makeConstraints {
-            $0.top.equalTo(stackView.snp.bottom).offset(10)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(10)
             $0.leading.trailing.equalToSuperview().inset(12)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-        allButton.snp.makeConstraints {
-            $0.leading.equalToSuperview()
-        }
-        
-        electronicsButton.snp.makeConstraints {
-            $0.leading.equalTo(allButton.snp.trailing)
-        }
-        
-        preciousMetalsButton.snp.makeConstraints {
-            $0.leading.equalTo(electronicsButton.snp.trailing)
-        }
-        
-        clothingButton.snp.makeConstraints {
-            $0.leading.equalTo(preciousMetalsButton.snp.trailing)
-        }
-        
-        householdGoodsButton.snp.makeConstraints {
-            $0.leading.equalTo(clothingButton.snp.trailing)
-        }
-        
-        etcButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(5)
         }
         
         floatingButton.snp.makeConstraints {

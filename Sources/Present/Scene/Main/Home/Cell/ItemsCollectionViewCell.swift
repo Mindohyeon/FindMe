@@ -16,7 +16,7 @@ class ItemsCollectionViewCell: UICollectionViewCell {
     
     private let itemsImage = UIImageView().then {
         $0.layer.cornerRadius = 4
-        $0.backgroundColor = .gray
+        $0.backgroundColor = FindMeAsset.Colors.grey.color
     }
     
     private let itemsTitle = UILabel().then {
@@ -26,6 +26,7 @@ class ItemsCollectionViewCell: UICollectionViewCell {
     
     private let itemsLocation = UILabel().then {
         $0.text = "Location Information"
+        $0.textColor = .gray
         $0.font = .systemFont(ofSize: 11)
         $0.numberOfLines = 0
     }
@@ -59,13 +60,13 @@ class ItemsCollectionViewCell: UICollectionViewCell {
         
         itemsLocation.snp.makeConstraints {
             $0.top.equalTo(itemsTitle.snp.bottom).offset(4)
-            $0.leading.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
         }
     }
     
     func addFindAllData(with data: HomeModel) {
         DispatchQueue.main.async {
-            if let imageUrl = URL(string: data.lostImages[0]) {
+            if let imageUrl = URL(string: data.imageUrl[0]) {
                 self.itemsImage.kf.setImage(with: imageUrl)
             }
             self.itemsTitle.text = data.title

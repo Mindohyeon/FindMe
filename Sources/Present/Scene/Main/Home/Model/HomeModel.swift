@@ -12,16 +12,11 @@ struct HomeModel: Codable {
     var id: Int
     var title: String
     var description: String
-    var lostImages: [String]
-    var category: Category
+    var imageUrl: [String]
+    var category: String
     var tags: [String]
     var isSafe: Bool
     var place: String
     var latitude: String
     var longitude: String
-}
-
-struct Category: Codable {
-    var mainCategory: String
-    var subCategory: String
 }
