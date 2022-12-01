@@ -12,7 +12,6 @@ import Alamofire
 class SignInViewModel: BaseViewModel {
     let url = APIConstants.signInURL
     let token = UserManager.shared
-    let keychain = KeyChain.shared
     
     func pushPhoneNumberCertifyVC() {
         coordinator.navigate(to: .phoneNumberCertityIsRequired)
