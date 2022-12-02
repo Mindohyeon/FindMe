@@ -20,6 +20,9 @@ class APIConstants {
     static let checkCertificationNumberURL = url + "/auth/check"
     static let getAddress = "https://business.juso.go.kr/addrlink/addrLinkApi.do"
     
+    //reissue
+    static let reissueURL = url + "/reissue"
+    
     //lost
     static let findAllPost = url + "/lost/findAll"
 }
