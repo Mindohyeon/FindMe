@@ -17,6 +17,10 @@ protocol findAllPresentable: AnyObject {
 class HomeViewModel: BaseViewModel {
     weak var delegate: findAllPresentable?
     
+    func pushDetailPostVC(model: HomeModel) {
+        coordinator.navigate(to: .pushDetailPostIsRequired(model: model))
+    }
+    
     func findAllItems() {
         let url = APIConstants.findAllPost
         let headers: HTTPHeaders = ["Content-Type": "application/json", "Accept": "application/json"]
@@ -28,7 +32,7 @@ class HomeViewModel: BaseViewModel {
         .responseJSON { [weak self] response in
             let decodeResponse = try? JSONDecoder().decode([HomeModel].self, from: response.data!)
             self?.delegate?.findAllData.onNext(decodeResponse ?? .init())
-            
+            print(decodeResponse)
             switch response.result {
             case .success:
                 print("success")
