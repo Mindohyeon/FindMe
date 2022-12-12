@@ -84,9 +84,6 @@ class MapViewController: BaseVC<MapViewModel>, findAllItemsPresentable, MKMapVie
     override func configureVC() {
         
         viewModel.delegate = self
-        findAllItemsData.subscribe { response in
-            print("response = \(response)")
-        }.disposed(by: disposeBag)
         
         locationManager.requestAlwaysAuthorization()
         checkUserLocationServicesAuthorization()
@@ -97,7 +94,7 @@ class MapViewController: BaseVC<MapViewModel>, findAllItemsPresentable, MKMapVie
         mapView.showsUserLocation = true
         
         findAllItemsData.subscribe(onNext: { [weak self] data in
-            for i in 1..<data.count {
+            for i in 0..<data.count {
                 self?.setAnnotation(latitudeValue: Double(data[i].latitude)!, longitudeValue: Double(data[i].longitude)!, delta: 0.01, title: data[i].title, subtitle: "subtitle")
             }
         }).disposed(by: disposeBag)
