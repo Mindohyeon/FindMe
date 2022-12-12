@@ -28,7 +28,7 @@ class HomeViewModel: BaseViewModel {
                    method: .get,
                    encoding: URLEncoding.queryString,
                    headers: headers,
-                    interceptor: JwtRequestInterceptor())
+                   interceptor: JwtRequestInterceptor()).validate()
         .responseData { [weak self] response in
             let decodeResponse = try? JSONDecoder().decode([HomeModel].self, from: response.data!)
             self?.delegate?.findAllData.onNext(decodeResponse ?? .init())
