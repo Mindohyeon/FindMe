@@ -36,7 +36,7 @@ class HomeViewModel: BaseViewModel {
             case .success:
                 print("success")
             case .failure(let error):
-                print("failure = \(error)")
+                print("HomeViewModelfailure = \(error)")
             }
         }
     }

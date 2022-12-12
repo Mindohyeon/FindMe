@@ -24,15 +24,15 @@ final class JwtRequestInterceptor: RequestInterceptor {
     }
     
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 else {
+        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 400 else {
             completion(.doNotRetryWithError(error))
             return
         }
         
         let url = APIConstants.reissueURL
-        let headers: HTTPHeaders = ["Authorization" : tk.read(key: "refreshToken")!]
+        let headers: HTTPHeaders = ["RefreshToken" : tk.read(key: "refreshToken")!]
         
-        AF.request(url, method: .post, encoding: JSONEncoding.default, headers: headers).responseData { [weak self] response in
+        AF.request(url, method: .patch, encoding: JSONEncoding.default, headers: headers).responseData { [weak self] response in
             switch response.result{
             case .success(let tokenData):
                 self?.tk.deleteAll()

@@ -55,7 +55,6 @@ class PhoneNumberCertifyViewModel: BaseViewModel {
             try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
         } catch {
             print("HTTP Body Error")
-            
         }
         
         AF.request(request).responseData { [weak self] response in
