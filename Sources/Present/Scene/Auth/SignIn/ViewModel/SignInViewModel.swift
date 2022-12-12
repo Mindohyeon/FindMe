@@ -35,22 +35,19 @@ class SignInViewModel: BaseViewModel {
             print("HTTP Body Error")
         }
         
-        AF.request(request).responseJSON { [weak self] response in
-            //response.result == 토큰
-            print(response.response?.statusCode)
-            
+        AF.request(request).responseData { [weak self] response in
             switch response.result {
             case .success(let loginData):
                 print("성공")
                 print("token = \(response.result)")
                 let tk = KeyChain()
                 
-                if let refreshToken = (try? JSONSerialization.jsonObject(with: response.data!, options: []) as? [String: Any])? ["refreshToken"] as? String {
+                if let refreshToken = (try? JSONSerialization.jsonObject(with: loginData, options: []) as? [String: Any])? ["refreshToken"] as? String {
                     print("refreshtoken = \(refreshToken)")
                     tk.create(key: "refreshToken", token: refreshToken)
                 }
                 
-                if let accessToken = (try? JSONSerialization.jsonObject(with: response.data!, options: []) as? [String: Any])? ["accessToken"] as? String {
+                if let accessToken = (try? JSONSerialization.jsonObject(with: loginData, options: []) as? [String: Any])? ["accessToken"] as? String {
                     print("accesstoken = \(accessToken)")
                     tk.create(key: "accessToken", token: accessToken)
                 }

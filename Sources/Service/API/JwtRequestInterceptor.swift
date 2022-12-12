@@ -32,16 +32,16 @@ final class JwtRequestInterceptor: RequestInterceptor {
         let url = APIConstants.reissueURL
         let headers: HTTPHeaders = ["Authorization" : tk.read(key: "refreshToken")!]
         
-        AF.request(url, method: .post, encoding: JSONEncoding.default, headers: headers).responseJSON { [weak self] response in
+        AF.request(url, method: .post, encoding: JSONEncoding.default, headers: headers).responseData { [weak self] response in
             switch response.result{
-            case .success(_):
+            case .success(let tokenData):
                 self?.tk.deleteAll()
                 
-                if let refreshToken = (try? JSONSerialization.jsonObject(with: response.data!, options: []) as? [String: Any])? ["refreshToken"] as? String {
+                if let refreshToken = (try? JSONSerialization.jsonObject(with: tokenData, options: []) as? [String: Any])? ["refreshToken"] as? String {
                     self?.tk.create(key: "refreshToken", token: refreshToken)
                 }
                 
-                if let accessToken = (try? JSONSerialization.jsonObject(with: response.data!, options: []) as? [String: Any])? ["accessToken"] as? String {
+                if let accessToken = (try? JSONSerialization.jsonObject(with: tokenData, options: []) as? [String: Any])? ["accessToken"] as? String {
                     self?.tk.create(key: "accessToken", token: accessToken)
                 }
                 completion(.retry)
