@@ -32,7 +32,6 @@ class PhoneNumberCertifyViewModel: BaseViewModel {
         }
         
         AF.request(request).responseData { [weak self] response in
-            print(response.response?.statusCode)
             switch response.response?.statusCode {
             case 200:
                 print("메세지 발급 성공")
@@ -60,7 +59,6 @@ class PhoneNumberCertifyViewModel: BaseViewModel {
         }
         
         AF.request(request).responseData { [weak self] response in
-            print(response.response?.statusCode)
             switch response.response?.statusCode {
             case 200:
                 print("인증번호 인증 성공")
