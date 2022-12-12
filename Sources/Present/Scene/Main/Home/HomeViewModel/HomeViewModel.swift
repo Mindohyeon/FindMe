@@ -23,11 +23,12 @@ class HomeViewModel: BaseViewModel {
     
     func findAllItems() {
         let url = APIConstants.findAllPost
-        let headers: HTTPHeaders = ["Content-Type": "application/json", "Accept": "application/json", "Authorization": UserManager.shared.accessToken!]
+        let headers: HTTPHeaders = ["Content-Type": "application/json", "Accept": "application/json"]
         AF.request(url,
                    method: .get,
                    encoding: URLEncoding.queryString,
-                   headers: headers)
+                   headers: headers,
+                    interceptor: JwtRequestInterceptor())
         .responseJSON { [weak self] response in
             let decodeResponse = try? JSONDecoder().decode([HomeModel].self, from: response.data!)
             self?.delegate?.findAllData.onNext(decodeResponse ?? .init())

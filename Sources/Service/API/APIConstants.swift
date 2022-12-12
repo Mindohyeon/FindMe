@@ -9,7 +9,7 @@
 import Foundation
 
 class APIConstants {
-    static let url = "http://3.35.190.72:8080"
+    static let url = "http://10.82.20.18:8081"
     
     //SignIn
     static let signInURL = url + "/auth/signin"
@@ -19,6 +19,9 @@ class APIConstants {
     static let sendPhoneNumberURL = url + "/auth/send"
     static let checkCertificationNumberURL = url + "/auth/check"
     static let getAddress = "https://business.juso.go.kr/addrlink/addrLinkApi.do"
+    
+    //reissue
+    static let reissueURL = url + "/reissue"
     
     //lost
     static let findAllPost = url + "/lost/findAll"
