@@ -24,35 +24,29 @@ final class JwtRequestInterceptor: RequestInterceptor {
     }
     
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-            
-            guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 else {
-                completion(.doNotRetryWithError(error))
-                return
-            }
-            
-            let url = APIConstants.reissueURL
-            let headers: HTTPHeaders = ["Authorization" : tk.read(key: "refreshToken")!]
-            
-            AF.request(url, method: .post, encoding: JSONEncoding.default, headers: headers).responseJSON { [weak self] response in
-                switch response.result{
-                case .success(_):
-                    self?.tk.deleteAll()
-                    
-                    if let refreshToken = (try? JSONSerialization.jsonObject(with: response.data!, options: []) as? [String: Any])? ["refreshToken"] as? String {
-                        print("refreshtoken = \(refreshToken)")
-                        self?.tk.create(key: "refreshToken", token: refreshToken)
-                        print(refreshToken)
-                    }
-                    
-                    if let accessToken = (try? JSONSerialization.jsonObject(with: response.data!, options: []) as? [String: Any])? ["accessToken"] as? String {
-                        print("accesstoken = \(accessToken)")
-                        self?.tk.create(key: "accessToken", token: accessToken)
-                    }
-                    completion(.retry)
-                case .failure(let error):
-                    completion(.doNotRetryWithError(error))
+        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 else {
+            completion(.doNotRetryWithError(error))
+            return
+        }
+        
+        let url = APIConstants.reissueURL
+        let headers: HTTPHeaders = ["Authorization" : tk.read(key: "refreshToken")!]
+        
+        AF.request(url, method: .post, encoding: JSONEncoding.default, headers: headers).responseJSON { [weak self] response in
+            switch response.result{
+            case .success(_):
+                self?.tk.deleteAll()
+                
+                if let refreshToken = (try? JSONSerialization.jsonObject(with: response.data!, options: []) as? [String: Any])? ["refreshToken"] as? String {
+                    self?.tk.create(key: "refreshToken", token: refreshToken)
                 }
+                
+                if let accessToken = (try? JSONSerialization.jsonObject(with: response.data!, options: []) as? [String: Any])? ["accessToken"] as? String {
+                    self?.tk.create(key: "accessToken", token: accessToken)
+                }
+                completion(.retry)
+            case .failure(let error):
+                completion(.doNotRetryWithError(error))
             }
         }
     }
