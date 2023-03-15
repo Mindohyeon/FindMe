@@ -13,7 +13,7 @@ final class JwtRequestInterceptor: RequestInterceptor {
     let tk = KeyChain()
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        guard urlRequest.url?.absoluteString.hasPrefix("http://10.82.20.18:8081") == true,
+        guard urlRequest.url?.absoluteString.hasPrefix(APIConstants.baseURL) == true,
               let accessToken = tk.read(key: "accessToken") else {
             completion(.success(urlRequest))
             return
@@ -24,26 +24,22 @@ final class JwtRequestInterceptor: RequestInterceptor {
     }
     
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 400 else {
+        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 else {
             completion(.doNotRetryWithError(error))
             return
         }
         
         let url = APIConstants.reissueURL
-        let headers: HTTPHeaders = ["RefreshToken" : tk.read(key: "refreshToken")!]
+        let headers: HTTPHeaders = ["RefreshToken" : tk.read(key: "refreshToken") ?? .init()]
         
         AF.request(url, method: .patch, encoding: JSONEncoding.default, headers: headers).responseData { [weak self] response in
-            switch response.result{
-            case .success(let tokenData):
+            print("retry status code = \(response.response?.statusCode)")
+            switch response.result {
+            case .success(let data):
                 self?.tk.deleteAll()
-                
-                if let refreshToken = (try? JSONSerialization.jsonObject(with: tokenData, options: []) as? [String: Any])? ["refreshToken"] as? String {
-                    self?.tk.create(key: "refreshToken", token: refreshToken)
-                }
-                
-                if let accessToken = (try? JSONSerialization.jsonObject(with: tokenData, options: []) as? [String: Any])? ["accessToken"] as? String {
-                    self?.tk.create(key: "accessToken", token: accessToken)
-                }
+                let decodeResult = try? JSONDecoder().decode(UserManager.self, from: data)
+                self?.tk.create(key: "accessToken", token: decodeResult?.accessToken ?? "")
+                self?.tk.create(key: "refreshToken", token: decodeResult?.refreshToken ?? "")
                 completion(.retry)
             case .failure(let error):
                 completion(.doNotRetryWithError(error))
@@ -51,3 +47,4 @@ final class JwtRequestInterceptor: RequestInterceptor {
         }
     }
 }
+

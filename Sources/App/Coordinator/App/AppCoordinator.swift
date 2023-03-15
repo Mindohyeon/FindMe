@@ -1,11 +1,5 @@
-//
-//  AppCoordinatoe.swift
-//  FindMe
-//
-//  Created by 민도현 on 2022/11/04.
-//  Copyright © 2022 com.dohyeon. All rights reserved.
-//
 import UIKit
+import Alamofire
 
 class AppCoordinator: Coordinator {
     var navigationController: UINavigationController
@@ -20,10 +14,27 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-        let singInController = SignInCoordinator(navigationController: navigationController)
+        let tk = KeyChain()
+        let url = APIConstants.reissueURL
+        let headers: HTTPHeaders = ["RefreshToken" : tk.read(key: "refreshToken") ?? .init()]
+        
+        let signInController = SignInCoordinator(navigationController: navigationController)
+        let homeController = TabBarCoordinator(navigationController: navigationController)
+        
         window?.rootViewController = navigationController
         
-        start(coordinator: singInController)
+        AF.request(url, method: .patch, encoding: JSONEncoding.default, headers: headers)
+            .validate()
+            .responseData { [weak self] response in
+            switch response.result {
+            case .success(let data):
+                let decodeResult = try? JSONDecoder().decode(UserManager.self, from: data)
+                tk.create(key: "refreshToken", token: decodeResult?.refreshToken ?? "")
+                self?.start(coordinator: homeController)
+            case .failure:
+                self?.start(coordinator: signInController)
+            }
+        }
     }
     
     func start(coordinator: Coordinator) {
