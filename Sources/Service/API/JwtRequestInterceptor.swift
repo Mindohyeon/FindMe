@@ -13,7 +13,7 @@ final class JwtRequestInterceptor: RequestInterceptor {
     let tk = KeyChain()
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        guard urlRequest.url?.absoluteString.hasPrefix("http://10.82.20.18:8081") == true,
+        guard urlRequest.url?.absoluteString.hasPrefix(APIConstants.baseURL) == true,
               let accessToken = tk.read(key: "accessToken") else {
             completion(.success(urlRequest))
             return
@@ -24,7 +24,7 @@ final class JwtRequestInterceptor: RequestInterceptor {
     }
     
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 400 else {
+        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 403 else {
             completion(.doNotRetryWithError(error))
             return
         }
@@ -42,7 +42,7 @@ final class JwtRequestInterceptor: RequestInterceptor {
                 }
                 
                 if let accessToken = (try? JSONSerialization.jsonObject(with: tokenData, options: []) as? [String: Any])? ["accessToken"] as? String {
-                    self?.tk.create(key: "accessToken", token: accessToken)
+                    self?.tk.create(key: "accessTxgoken", token: accessToken)
                 }
                 completion(.retry)
             case .failure(let error):
@@ -51,3 +51,4 @@ final class JwtRequestInterceptor: RequestInterceptor {
         }
     }
 }
+

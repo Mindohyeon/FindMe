@@ -8,13 +8,9 @@
 
 import Foundation
 
-class UserManager: Codable {
-//    static let shared = UserManager()
-    
+struct UserManager: Codable {
     var id: String
     var accessToken: String?
     var refreshToken: String?
-    var expiredAt: String?  
-    
-//    private init() {}
+    var expiredAt: String?
 }
