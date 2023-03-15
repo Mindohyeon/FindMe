@@ -29,14 +29,14 @@ class HomeViewModel: BaseViewModel {
                    encoding: URLEncoding.queryString,
                    headers: headers,
                    interceptor: JwtRequestInterceptor()).validate()
-        .responseData { [weak self] response in
-            let decodeResponse = try? JSONDecoder().decode([HomeModel].self, from: response.data!)
-            self?.delegate?.findAllData.onNext(decodeResponse ?? .init())
+            .responseData(emptyResponseCodes: [200, 201, 204]) { [weak self] response in
             switch response.result {
-            case .success:
+            case .success(let data):
+                let decodeResponse = try? JSONDecoder().decode([HomeModel].self, from: data)
+                self?.delegate?.findAllData.onNext(decodeResponse ?? .init())
                 print("success")
             case .failure(let error):
-                print("HomeViewModelfailure = \(error)")
+                print("HomeViewModelfailure = \(error.localizedDescription)")
             }
         }
     }
