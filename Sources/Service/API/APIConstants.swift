@@ -11,9 +11,7 @@ struct APIConstants {
     static let sendPhoneNumberURL = baseURL + "/auth/send"
     static let checkCertificationNumberURL = baseURL + "/auth/check"
     static let getAddress = "https://business.juso.go.kr/addrlink/addrLinkApi.do"
-    
-    //reissue
-    static let reissueURL = baseURL + "/reissue"
+    static let reissueURL = baseURL + "/auth/reissue"
     
     //lost
     static let findAllPost = baseURL + "/lost/findAll"
